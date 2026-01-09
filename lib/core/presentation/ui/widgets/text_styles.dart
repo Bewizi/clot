@@ -1,3 +1,4 @@
+import 'package:clot/core/presentation/constants/app_colors.dart';
 import 'package:clot/core/presentation/constants/font_manager.dart';
 import 'package:clot/core/presentation/ui/extension/fontsize_extension.dart';
 import 'package:flutter/widgets.dart';
@@ -117,9 +118,9 @@ class TextSmall extends AppText {
     return Text(
       text,
       style: TextStyle(
-        fontSize: 312,
+        fontSize: 12.fs,
         fontWeight: FontManagerWeight.regular,
-        color: color,
+        color: AppColors.kBlcak100,
       ),
       textAlign: textAlign,
     );
