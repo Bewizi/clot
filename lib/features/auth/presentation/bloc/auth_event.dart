@@ -3,6 +3,8 @@ part of 'auth_bloc.dart';
 @immutable
 sealed class AuthEvent {}
 
+class AuthStatusChecked extends AuthEvent {}
+
 // Sign Up Event
 class SignUpRequested extends AuthEvent {
   final String firstname;
@@ -30,7 +32,6 @@ class SignInRequested extends AuthEvent {
 class SignOutRequested extends AuthEvent {}
 
 // Check Auth Status Event (when app starts)
-class AuthStatusChecked extends AuthEvent {}
 
 class PasswordResetRequested extends AuthEvent {
   final String email;
