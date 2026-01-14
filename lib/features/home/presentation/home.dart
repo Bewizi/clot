@@ -6,13 +6,15 @@ import 'package:clot/core/presentation/ui/extension/app_spacing_extension.dart';
 import 'package:clot/core/presentation/ui/widgets/icon_container.dart';
 import 'package:clot/core/presentation/ui/widgets/text_styles.dart';
 import 'package:clot/features/products/presentation/bloc/product_bloc.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:clot/features/products/presentation/shop_by_categories.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
   static const String routeName = '/home';
 
   @override
@@ -48,7 +50,7 @@ class _HomePageState extends State<HomePage> {
 
   final List<String> list = ['Men', 'Women'];
 
-  String dropDonwValue = 'Men';
+  String dropDownValue = 'Men';
 
   @override
   Widget build(BuildContext context) {
@@ -64,11 +66,11 @@ class _HomePageState extends State<HomePage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // user image rounded inside of clipprect
+                    // user image rounded inside of ClipRRect
                     ClipRRect(
                       borderRadius: BorderRadius.circular(100),
                       child: Image.asset(
-                        'assets/images/user.png',
+                        '',
                         width: 50,
                         height: 50,
                         fit: BoxFit.cover,
@@ -84,7 +86,7 @@ class _HomePageState extends State<HomePage> {
 
                     16.horizontalSpace,
 
-                    // droppdownmeanu
+                    // dropDownMenu
                     Expanded(
                       child: Center(
                         child: Container(
@@ -99,7 +101,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                           child: DropdownButtonHideUnderline(
                             child: DropdownButton(
-                              value: dropDonwValue,
+                              value: dropDownValue,
                               icon: SvgPicture.asset(
                                 AppSvgs.kArrowDown,
                                 width: 16,
@@ -114,7 +116,7 @@ class _HomePageState extends State<HomePage> {
                               }).toList(),
                               onChanged: (value) {
                                 setState(() {
-                                  dropDonwValue = value!;
+                                  dropDownValue = value!;
                                 });
                               },
                             ),
@@ -147,7 +149,13 @@ class _HomePageState extends State<HomePage> {
                           'Categories',
                           fontWeight: FontManagerWeight.bold,
                         ),
-                        TextRegular('See All', color: AppColors.kBlcak100),
+                        InkWell(
+                          onTap: () => context.push(ShopByCategories.routeName),
+                          child: TextRegular(
+                            'See All',
+                            color: AppColors.kBlcak100,
+                          ),
+                        ),
                       ],
                     ),
                     24.verticalSpace,
@@ -180,6 +188,16 @@ class _HomePageState extends State<HomePage> {
                                           width: 80,
                                           height: 80,
                                           fit: BoxFit.cover,
+                                          errorBuilder:
+                                              (
+                                                context,
+                                                error,
+                                                stackTrace,
+                                              ) => const Icon(
+                                                Icons
+                                                    .image_not_supported_rounded,
+                                                size: 16,
+                                              ),
                                         ),
                                       ),
                                     ),

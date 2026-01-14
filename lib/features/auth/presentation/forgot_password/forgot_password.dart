@@ -8,6 +8,7 @@ import 'package:clot/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:clot/features/auth/presentation/forgot_password/reset_password.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 class ForgotPassword extends StatefulWidget {
@@ -68,6 +69,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       children: [
                         // email
                         AppInputFeild(
+                          prefix: Icon(FontAwesomeIcons.envelope),
                           controller: emailcontroller,
                           hintText: 'Enter Email address',
                           keyboardType: TextInputType.emailAddress,
