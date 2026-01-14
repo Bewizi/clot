@@ -9,12 +9,12 @@ import 'package:clot/core/presentation/ui/widgets/text_styles.dart';
 import 'package:clot/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:clot/features/auth/presentation/forgot_password/forgot_password.dart';
 import 'package:clot/features/auth/presentation/sign_up/sign_up.dart';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -77,6 +77,7 @@ class _SignInState extends State<SignIn> {
                       children: [
                         // email
                         AppInputFeild(
+                          prefix: Icon(FontAwesomeIcons.envelope),
                           controller: emailcontroller,
                           hintText: 'Email Address',
                           keyboardType: TextInputType.emailAddress,
@@ -98,6 +99,7 @@ class _SignInState extends State<SignIn> {
                           crossAxisAlignment: .start,
                           children: [
                             AppInputFeild(
+                              prefix: Icon(FontAwesomeIcons.lock),
                               controller: passwordcontroller,
                               hintText: 'Password',
                               keyboardType: TextInputType.visiblePassword,
