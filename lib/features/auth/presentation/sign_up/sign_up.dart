@@ -9,8 +9,9 @@ import 'package:clot/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:clot/features/auth/presentation/sign_in/sign_in.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -87,6 +88,7 @@ class _SignUpState extends State<SignUp> {
                       children: [
                         // firstname
                         AppInputFeild(
+                          prefix: Icon(FontAwesomeIcons.user),
                           controller: firstnamecontroller,
                           hintText: 'Firstname',
                           keyboardType: TextInputType.name,
@@ -103,6 +105,7 @@ class _SignUpState extends State<SignUp> {
 
                         // lastname
                         AppInputFeild(
+                          prefix: Icon(FontAwesomeIcons.user),
                           controller: lastnamecontroller,
                           hintText: 'Lastname',
                           keyboardType: TextInputType.name,
@@ -119,6 +122,7 @@ class _SignUpState extends State<SignUp> {
 
                         // email
                         AppInputFeild(
+                          prefix: Icon(FontAwesomeIcons.envelope),
                           controller: emailcontroller,
                           hintText: 'Email Address',
                           keyboardType: TextInputType.emailAddress,
@@ -137,6 +141,7 @@ class _SignUpState extends State<SignUp> {
 
                         // password
                         AppInputFeild(
+                          prefix: Icon(FontAwesomeIcons.lock),
                           controller: passwordcontroller,
                           hintText: 'Password',
                           keyboardType: TextInputType.visiblePassword,

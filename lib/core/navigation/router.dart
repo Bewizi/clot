@@ -1,13 +1,19 @@
 // router.dart
 import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:clot/features/auth/presentation/forgot_password/forgot_password.dart';
 import 'package:clot/features/auth/presentation/forgot_password/reset_password.dart';
 import 'package:clot/features/auth/presentation/sign_in/sign_in.dart';
 import 'package:clot/features/auth/presentation/sign_up/sign_up.dart';
 import 'package:clot/features/auth/presentation/tell_us_about_yourself/tell_us_about_yourself.dart';
 import 'package:clot/features/home/presentation/home.dart';
+import 'package:clot/features/products/domain/category.dart';
+import 'package:clot/features/products/presentation/accessories.dart';
+import 'package:clot/features/products/presentation/category_product.dart';
+import 'package:clot/features/products/presentation/hoodies.dart';
+import 'package:clot/features/products/presentation/shop_by_categories.dart';
 import 'package:clot/features/splashscreen/splash_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
@@ -113,11 +119,39 @@ final GoRouter appRoute = GoRouter(
       name: 'home',
       builder: (context, state) => const HomePage(),
     ),
+    GoRoute(
+      path: ShopByCategories.routeName,
+      name: 'shopByCategories',
+      builder: (context, state) => const ShopByCategories(),
+    ),
+
+    GoRoute(
+      path: Hoodies.routeName,
+      name: 'hoodies',
+      builder: (context, state) => const Hoodies(),
+    ),
+
+    GoRoute(
+      path: Accessories.routeName,
+      name: 'accessories',
+      builder: (context, state) => const Accessories(),
+    ),
+
+    GoRoute(
+      path: CategoryProduct.routeName,
+      name: 'categoryProduct',
+      builder: (context, state) {
+        final category = state.extra as Category;
+
+        return CategoryProduct(category: category);
+      },
+    ),
   ],
 );
 
 class GoRouterRefreshStream extends ChangeNotifier {
   late final Stream<dynamic> stream;
+
   GoRouterRefreshStream(Stream<dynamic> stream) {
     notifyListeners();
     _subscription = stream.asBroadcastStream().listen(
