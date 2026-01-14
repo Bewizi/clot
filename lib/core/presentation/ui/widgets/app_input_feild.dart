@@ -52,7 +52,10 @@ class AppInputFeild extends StatelessWidget {
           borderSide: BorderSide(color: AppColors.kError500, width: 1),
         ),
         errorStyle: TextStyle(fontWeight: FontManagerWeight.medium),
-        prefixIcon: prefix,
+        prefixIcon: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+          child: prefix,
+        ),
         prefixIconColor: AppColors.kBlcak100,
         suffixIcon: suffix,
         suffixIconColor: AppColors.kBlcak100,
