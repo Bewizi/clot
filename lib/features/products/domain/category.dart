@@ -13,15 +13,7 @@ class Category {
     required this.order,
   });
 
-  // factory Category.fromFirestore(DocumentSnapshot doc) {
-  //   final data = doc.data() as Map<String, dynamic>;
-  //   return Category(
-  //     id: doc.id,
-  //     name: data['name'] ?? '',
-  //     imageUrl: data['imageUrl'] ?? '',
-  //     order: data['order'] ?? 0,
-  //   );
-  // }
+
 
   factory Category.fromMap(Map<String, dynamic> map, String id) {
     return Category(
@@ -32,9 +24,7 @@ class Category {
     );
   }
 
-  // Map<String, dynamic> toFirestore() {
-  //   return {'name': name, 'imageUrl': imageUrl, 'order': order};
-  // }
+  
 
   Map<String, dynamic> toMap() {
     return {'name': name, 'imageUrl': imageUrl, 'order': order};
