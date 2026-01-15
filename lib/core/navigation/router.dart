@@ -1,17 +1,19 @@
 // router.dart
 import 'dart:async';
 
-import 'package:clot/features/auth/presentation/forgot_password/forgot_password.dart';
-import 'package:clot/features/auth/presentation/forgot_password/reset_password.dart';
-import 'package:clot/features/auth/presentation/sign_in/sign_in.dart';
-import 'package:clot/features/auth/presentation/sign_up/sign_up.dart';
-import 'package:clot/features/auth/presentation/tell_us_about_yourself/tell_us_about_yourself.dart';
-import 'package:clot/features/home/presentation/home.dart';
+import 'package:clot/features/auth/presentation/pages/forgot_password/forgot_password.dart';
+import 'package:clot/features/auth/presentation/pages/forgot_password/reset_password.dart';
+import 'package:clot/features/auth/presentation/pages/sign_in/sign_in.dart';
+import 'package:clot/features/auth/presentation/pages/sign_up/sign_up.dart';
+import 'package:clot/features/auth/presentation/pages/tell_us_about_yourself/tell_us_about_yourself.dart';
+import 'package:clot/features/home/presentation/pages/home.dart';
 import 'package:clot/features/products/domain/category.dart';
-import 'package:clot/features/products/presentation/accessories.dart';
-import 'package:clot/features/products/presentation/category_product.dart';
-import 'package:clot/features/products/presentation/hoodies.dart';
-import 'package:clot/features/products/presentation/shop_by_categories.dart';
+
+import 'package:clot/features/products/presentation/pages/accessories.dart';
+import 'package:clot/features/products/presentation/pages/category_product.dart';
+import 'package:clot/features/products/presentation/pages/hoodies.dart';
+import 'package:clot/features/products/presentation/pages/shop_by_categories.dart';
+
 import 'package:clot/features/splashscreen/splash_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -46,7 +48,7 @@ final GoRouter appRoute = GoRouter(
         final isProfileComplete = userDoc.data()?['isProfileComplete'] ?? false;
 
         // If profile is not complete and not on onboarding page, redirect to onboarding
-        if (!isProfileComplete && !isOnboardingRoute) {
+        if (!isProfileComplete && !isOnboardingRoute && !isAuthRoute) {
           return TellUsAboutYourself.routeName;
         }
 
@@ -65,7 +67,6 @@ final GoRouter appRoute = GoRouter(
           return HomePage.routeName;
         }
       } catch (e) {
-        print('Error checking profile status: $e');
         throw Exception('Error checking profile status: $e');
       }
     }
