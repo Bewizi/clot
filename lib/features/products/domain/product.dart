@@ -24,7 +24,7 @@ class Product {
       id: id,
       categoryId: map['categoryId'] ?? '',
       imageUrl: map['imageUrl'] ?? '',
-      images: List<String>.from(map['images'] ?? ''),
+      images: List<String>.from(map['images'] ?? []),
       name: map['name'] ?? '',
       price: map['price'] ?? '',
       createdAt: map['createdAt'] != null
