@@ -6,4 +6,5 @@ class AppSvgs {
   static const String kArrowDown = 'assets/svgs/arrowdown_icon.svg';
 
   static const String kCart = 'assets/svgs/bag.svg';
+  static const String kHeart = 'assets/svgs/heart_icon.svg';
 }
