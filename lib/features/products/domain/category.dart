@@ -13,18 +13,14 @@ class Category {
     required this.order,
   });
 
-
-
-  factory Category.fromMap(Map<String, dynamic> map, String id) {
+  factory Category.fromMap(Map<String, dynamic> map, String docId) {
     return Category(
-      id: id,
+      id: map['id'] ?? docId,
       name: map['name'],
       imageUrl: map['imageUrl'],
       order: map['order'],
     );
   }
-
-  
 
   Map<String, dynamic> toMap() {
     return {'name': name, 'imageUrl': imageUrl, 'order': order};
