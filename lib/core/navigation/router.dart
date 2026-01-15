@@ -8,12 +8,10 @@ import 'package:clot/features/auth/presentation/pages/sign_up/sign_up.dart';
 import 'package:clot/features/auth/presentation/pages/tell_us_about_yourself/tell_us_about_yourself.dart';
 import 'package:clot/features/home/presentation/pages/home.dart';
 import 'package:clot/features/products/domain/category.dart';
-
 import 'package:clot/features/products/presentation/pages/accessories.dart';
 import 'package:clot/features/products/presentation/pages/category_product.dart';
 import 'package:clot/features/products/presentation/pages/hoodies.dart';
 import 'package:clot/features/products/presentation/pages/shop_by_categories.dart';
-
 import 'package:clot/features/splashscreen/splash_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
