@@ -1,6 +1,6 @@
 import 'package:clot/core/presentation/constants/app_colors.dart';
 import 'package:clot/core/presentation/constants/app_images.dart';
-import 'package:clot/features/auth/presentation/sign_up/sign_up.dart';
+import 'package:clot/features/auth/presentation/pages/sign_up/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
