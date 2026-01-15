@@ -5,7 +5,7 @@ import 'package:clot/core/presentation/ui/widgets/app_button.dart';
 import 'package:clot/core/presentation/ui/widgets/app_input_feild.dart';
 import 'package:clot/core/presentation/ui/widgets/text_styles.dart';
 import 'package:clot/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:clot/features/auth/presentation/forgot_password/reset_password.dart';
+import 'package:clot/features/auth/presentation/pages/forgot_password/reset_password.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
