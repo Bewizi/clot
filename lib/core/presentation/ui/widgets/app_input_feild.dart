@@ -36,7 +36,11 @@ class AppInputFeild extends StatelessWidget {
       minLines: minLines,
       maxLines: maxLines,
       obscureText: obscureText,
-
+      style: TextStyle(
+        fontSize: 20.fs,
+        fontWeight: FontManagerWeight.medium,
+        color: AppColors.kBlcak100,
+      ),
       decoration: InputDecoration(
         contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
         hintText: hintText,
@@ -56,9 +60,9 @@ class AppInputFeild extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
           child: prefix,
         ),
-        prefixIconColor: AppColors.kBlcak100,
+        prefixIconColor: AppColors.kBlcak100.withValues(alpha: 0.5),
         suffixIcon: suffix,
-        suffixIconColor: AppColors.kBlcak100,
+        suffixIconColor: AppColors.kBlcak100.withValues(alpha: 0.5),
       ),
       onChanged: (value) => onChanged?.call(value),
       validator: (value) => validator?.call(value),
