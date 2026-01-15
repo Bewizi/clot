@@ -6,7 +6,7 @@ import 'package:clot/core/presentation/ui/extension/app_spacing_extension.dart';
 import 'package:clot/core/presentation/ui/widgets/icon_container.dart';
 import 'package:clot/core/presentation/ui/widgets/text_styles.dart';
 import 'package:clot/features/products/presentation/bloc/product_bloc.dart';
-import 'package:clot/features/products/presentation/shop_by_categories.dart';
+import 'package:clot/features/products/presentation/pages/shop_by_categories.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
