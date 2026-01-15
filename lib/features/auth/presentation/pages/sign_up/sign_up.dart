@@ -6,7 +6,7 @@ import 'package:clot/core/presentation/ui/widgets/app_button.dart';
 import 'package:clot/core/presentation/ui/widgets/app_input_feild.dart';
 import 'package:clot/core/presentation/ui/widgets/text_styles.dart';
 import 'package:clot/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:clot/features/auth/presentation/sign_in/sign_in.dart';
+import 'package:clot/features/auth/presentation/pages/sign_in/sign_in.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,25 +24,33 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController firstnamecontroller = TextEditingController();
-  final TextEditingController lastnamecontroller = TextEditingController();
-  final TextEditingController emailcontroller = TextEditingController();
-  final TextEditingController passwordcontroller = TextEditingController();
+  final TextEditingController firstnameController = TextEditingController();
+  final TextEditingController lastnameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  bool isPasswordVisible = false;
 
   @override
   void dispose() {
-    firstnamecontroller.dispose();
-    lastnamecontroller.dispose();
-    emailcontroller.dispose();
-    passwordcontroller.dispose();
+    firstnameController.dispose();
+    lastnameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 
   void clearForm() {
-    firstnamecontroller.clear();
-    lastnamecontroller.clear();
-    emailcontroller.clear();
-    passwordcontroller.clear();
+    firstnameController.clear();
+    lastnameController.clear();
+    emailController.clear();
+    passwordController.clear();
+  }
+
+  void _passwordVisible() {
+    setState(() {
+      isPasswordVisible = !isPasswordVisible;
+    });
   }
 
   @override
@@ -52,7 +60,6 @@ class _SignUpState extends State<SignUp> {
         if (state is Authenticated) {
           clearForm();
           if (state.user.isProfileComplete == false) {
-            ;
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text('Account created! Complete your profile'),
@@ -89,7 +96,7 @@ class _SignUpState extends State<SignUp> {
                         // firstname
                         AppInputFeild(
                           prefix: Icon(FontAwesomeIcons.user),
-                          controller: firstnamecontroller,
+                          controller: firstnameController,
                           hintText: 'Firstname',
                           keyboardType: TextInputType.name,
                           validator: (value) {
@@ -106,7 +113,7 @@ class _SignUpState extends State<SignUp> {
                         // lastname
                         AppInputFeild(
                           prefix: Icon(FontAwesomeIcons.user),
-                          controller: lastnamecontroller,
+                          controller: lastnameController,
                           hintText: 'Lastname',
                           keyboardType: TextInputType.name,
                           validator: (value) {
@@ -123,7 +130,7 @@ class _SignUpState extends State<SignUp> {
                         // email
                         AppInputFeild(
                           prefix: Icon(FontAwesomeIcons.envelope),
-                          controller: emailcontroller,
+                          controller: emailController,
                           hintText: 'Email Address',
                           keyboardType: TextInputType.emailAddress,
                           validator: (value) {
@@ -142,10 +149,19 @@ class _SignUpState extends State<SignUp> {
                         // password
                         AppInputFeild(
                           prefix: Icon(FontAwesomeIcons.lock),
-                          controller: passwordcontroller,
+                          controller: passwordController,
                           hintText: 'Password',
                           keyboardType: TextInputType.visiblePassword,
-                          obscureText: true,
+                          obscureText: !isPasswordVisible,
+                          suffix: InkWell(
+                            onTap: _passwordVisible,
+                            child: Icon(
+                              isPasswordVisible
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                            ),
+                          ),
+
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Password is required';
@@ -167,12 +183,12 @@ class _SignUpState extends State<SignUp> {
                                   if (_formKey.currentState!.validate()) {
                                     context.read<AuthBloc>().add(
                                       SignUpRequested(
-                                        firstname: firstnamecontroller.text
+                                        firstname: firstnameController.text
                                             .trim(),
-                                        lastname: lastnamecontroller.text
+                                        lastname: lastnameController.text
                                             .trim(),
-                                        email: emailcontroller.text.trim(),
-                                        password: passwordcontroller.text
+                                        email: emailController.text.trim(),
+                                        password: passwordController.text
                                             .trim(),
                                       ),
                                     );

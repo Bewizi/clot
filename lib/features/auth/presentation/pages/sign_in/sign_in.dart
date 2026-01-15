@@ -7,8 +7,8 @@ import 'package:clot/core/presentation/ui/widgets/app_button.dart';
 import 'package:clot/core/presentation/ui/widgets/app_input_feild.dart';
 import 'package:clot/core/presentation/ui/widgets/text_styles.dart';
 import 'package:clot/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:clot/features/auth/presentation/forgot_password/forgot_password.dart';
-import 'package:clot/features/auth/presentation/sign_up/sign_up.dart';
+import 'package:clot/features/auth/presentation/pages/forgot_password/forgot_password.dart';
+import 'package:clot/features/auth/presentation/pages/sign_up/sign_up.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,21 +27,28 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController emailcontroller = TextEditingController();
-  final TextEditingController passwordcontroller = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   bool isLoading = false;
+  bool isPasswordVisible = false;
 
   @override
   void dispose() {
-    emailcontroller.dispose();
-    passwordcontroller.dispose();
+    emailController.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 
   void clearForm() {
-    emailcontroller.clear();
-    passwordcontroller.clear();
+    emailController.clear();
+    passwordController.clear();
+  }
+
+  void _passwordVisible() {
+    setState(() {
+      isPasswordVisible = !isPasswordVisible;
+    });
   }
 
   @override
@@ -78,7 +85,7 @@ class _SignInState extends State<SignIn> {
                         // email
                         AppInputFeild(
                           prefix: Icon(FontAwesomeIcons.envelope),
-                          controller: emailcontroller,
+                          controller: emailController,
                           hintText: 'Email Address',
                           keyboardType: TextInputType.emailAddress,
                           validator: (value) {
@@ -100,10 +107,18 @@ class _SignInState extends State<SignIn> {
                           children: [
                             AppInputFeild(
                               prefix: Icon(FontAwesomeIcons.lock),
-                              controller: passwordcontroller,
+                              controller: passwordController,
                               hintText: 'Password',
                               keyboardType: TextInputType.visiblePassword,
-                              obscureText: true,
+                              obscureText: !isPasswordVisible,
+                              suffix: InkWell(
+                                onTap: _passwordVisible,
+                                child: Icon(
+                                  isPasswordVisible
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
+                                ),
+                              ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Password is required';
@@ -160,8 +175,8 @@ class _SignInState extends State<SignIn> {
                                   if (_formKey.currentState!.validate()) {
                                     context.read<AuthBloc>().add(
                                       SignInRequested(
-                                        email: emailcontroller.text.trim(),
-                                        password: passwordcontroller.text
+                                        email: emailController.text.trim(),
+                                        password: passwordController.text
                                             .trim(),
                                       ),
                                     );

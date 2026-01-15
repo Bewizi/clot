@@ -3,7 +3,7 @@ import 'package:clot/core/presentation/ui/extension/app_spacing_extension.dart';
 import 'package:clot/core/presentation/ui/widgets/app_button.dart';
 import 'package:clot/core/presentation/ui/widgets/text_styles.dart';
 import 'package:clot/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:clot/features/home/presentation/home.dart';
+import 'package:clot/features/home/presentation/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -20,6 +20,7 @@ class TellUsAboutYourself extends StatefulWidget {
 class _TellUsAboutYourselfState extends State<TellUsAboutYourself> {
   String? selectedGender;
   int selectedAge = 18;
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthBloc, AuthState>(
