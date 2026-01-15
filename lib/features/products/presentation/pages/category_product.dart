@@ -101,9 +101,10 @@ class _CategoryProductState extends State<CategoryProduct> {
 
                           return Card(
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: BorderRadius.circular(8),
                             ),
                             surfaceTintColor: Colors.transparent,
+                            shadowColor: Colors.transparent,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -178,7 +179,7 @@ class _CategoryProductState extends State<CategoryProduct> {
                                       8.verticalSpace,
                                       TextSmall(
                                         product.price,
-                                        color: AppColors.kPrimary,
+                                        color: AppColors.kBlcak100,
                                         fontWeight: FontManagerWeight.bold,
                                       ),
                                     ],

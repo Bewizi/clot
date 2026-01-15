@@ -44,6 +44,7 @@ class TextHeading extends AppText {
     super.fontWeight,
     super.fontSizes,
   });
+
   @override
   Widget build(BuildContext context) {
     return Text(
@@ -67,6 +68,7 @@ class TextMedium extends AppText {
     super.fontWeight,
     super.fontSizes,
   });
+
   @override
   Widget build(BuildContext context) {
     return Text(
@@ -90,6 +92,7 @@ class TextRegular extends AppText {
     super.fontWeight,
     super.fontSizes,
   });
+
   @override
   Widget build(BuildContext context) {
     return Text(
@@ -113,6 +116,7 @@ class TextSmall extends AppText {
     super.fontWeight,
     super.fontSizes,
   });
+
   @override
   Widget build(BuildContext context) {
     return Text(
