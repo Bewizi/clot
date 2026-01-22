@@ -17,16 +17,38 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     on<LoadProductsByCategory>(_onLoadProductsByCategory);
     on<LoadAllProducts>(_onLoadAllProducts);
     on<LoadProductById>(_onLoadProductById);
+    on<LoadTopSellingProducts>(_onLoadTopSellingProducts);
+    on<LoadNewInProducts>(_onLoadNewInProducts);
+  }
+
+  HomeDataLoaded _getCurrentHomeState() {
+    if (state is HomeDataLoaded) {
+      return state as HomeDataLoaded;
+    }
+    return HomeDataLoaded(
+      categories: [],
+      topSellingProducts: [],
+      newInProducts: [],
+    );
   }
 
   Future<void> _onLoadCategories(
     LoadCategories event,
     Emitter<ProductState> emit,
   ) async {
-    emit(CategoryLoading());
+    // Get the LATEST state at emission time
+    var currentState = _getCurrentHomeState();
+    emit(currentState.copyWith(isCategoryLoading: true));
+
     try {
       final categories = await _productRepository.getCategories();
-      emit(CategoriesLoaded(categories));
+
+      // CRITICAL: Get state again AFTER async operation!
+      currentState = _getCurrentHomeState();
+
+      emit(
+        currentState.copyWith(categories: categories, isCategoryLoading: false),
+      );
     } catch (e) {
       emit(ProductError('Failed to load categories: $e'));
     }
@@ -74,6 +96,51 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       }
     } catch (e) {
       emit(ProductError('Failed to load product: $e'));
+    }
+  }
+
+  Future<void> _onLoadTopSellingProducts(
+    LoadTopSellingProducts event,
+    Emitter<ProductState> emit,
+  ) async {
+    var currentState = _getCurrentHomeState();
+    emit(currentState.copyWith(isTopSellingLoading: true));
+
+    try {
+      final products = await _productRepository.getTopSellingProducts();
+
+      // CRITICAL: Get state again AFTER async operation!
+      currentState = _getCurrentHomeState();
+
+      emit(
+        currentState.copyWith(
+          topSellingProducts: products,
+          isTopSellingLoading: false,
+        ),
+      );
+    } catch (e) {
+      emit(ProductError('Failed to load top selling products: $e'));
+    }
+  }
+
+  Future<void> _onLoadNewInProducts(
+    LoadNewInProducts event,
+    Emitter<ProductState> emit,
+  ) async {
+    var currentState = _getCurrentHomeState();
+    emit(currentState.copyWith(isNewInLoading: true));
+
+    try {
+      final products = await _productRepository.getNewInProducts();
+
+      // CRITICAL: Get state again AFTER async operation!
+      currentState = _getCurrentHomeState();
+
+      emit(
+        currentState.copyWith(newInProducts: products, isNewInLoading: false),
+      );
+    } catch (e) {
+      emit(ProductError('Failed to load new in products: $e'));
     }
   }
 }

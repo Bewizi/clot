@@ -8,6 +8,11 @@ class Product {
   final String name;
   final String price;
   final DateTime createdAt;
+  final bool isTopSelling;
+  final bool isNewIn;
+  final bool inStock;
+  final bool isLike;
+  final int salesCount;
 
   Product({
     required this.id,
@@ -17,6 +22,11 @@ class Product {
     required this.name,
     required this.price,
     required this.createdAt,
+    required this.isTopSelling,
+    required this.isNewIn,
+    required this.inStock,
+    required this.isLike,
+    required this.salesCount,
   });
 
   factory Product.fromMap(Map<String, dynamic> map, String id) {
@@ -30,6 +40,11 @@ class Product {
       createdAt: map['createdAt'] != null
           ? (map['createdAt'] as Timestamp).toDate()
           : DateTime.now(),
+      isTopSelling: map['isTopSelling'] ?? false,
+      isNewIn: map['isNewIn'] ?? false,
+      inStock: map['inStock'] ?? false,
+      isLike: map['isLike'] ?? false,
+      salesCount: map['salesCount'] ?? 0,
     );
   }
 
@@ -41,6 +56,11 @@ class Product {
       'name': name,
       'price': price,
       'createdAt': Timestamp.fromDate(createdAt),
+      'isTopSelling': isTopSelling,
+      'isNewIn': isNewIn,
+      'inStock': inStock,
+      'isLike': isLike,
+      'salesCount': salesCount,
     };
   }
 }

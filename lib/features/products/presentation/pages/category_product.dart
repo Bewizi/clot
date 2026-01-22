@@ -2,11 +2,12 @@ import 'package:clot/core/presentation/constants/app_colors.dart';
 import 'package:clot/core/presentation/constants/app_svgs.dart';
 import 'package:clot/core/presentation/constants/font_manager.dart';
 import 'package:clot/core/presentation/ui/extension/app_spacing_extension.dart';
+import 'package:clot/core/presentation/ui/extension/fontsize_extension.dart';
 import 'package:clot/core/presentation/ui/widgets/app_back_button.dart';
 import 'package:clot/core/presentation/ui/widgets/app_button.dart';
 import 'package:clot/core/presentation/ui/widgets/text_styles.dart';
 import 'package:clot/features/products/domain/category.dart';
-import 'package:clot/features/products/presentation/bloc/product_bloc.dart';
+import 'package:clot/features/products/presentation/category_bloc/category_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -26,11 +27,8 @@ class _CategoryProductState extends State<CategoryProduct> {
   @override
   void initState() {
     super.initState();
-
-    // Load products for this category
     final cleanCategoryId = widget.category.id.trim();
-
-    context.read<ProductBloc>().add(LoadProductsByCategory(cleanCategoryId));
+    context.read<CategoryBloc>().add(LoadCategoryProducts(cleanCategoryId));
   }
 
   @override
@@ -44,13 +42,13 @@ class _CategoryProductState extends State<CategoryProduct> {
           child: AppBackButton(),
         ),
       ),
-      body: BlocBuilder<ProductBloc, ProductState>(
+      body: BlocBuilder<CategoryBloc, CategoryState>(
         builder: (context, state) {
-          if (state is ProductLoading) {
+          if (state is CategoryLoading) {
             return const Center(child: CircularProgressIndicator());
           }
 
-          if (state is ProductsLoaded) {
+          if (state is CategoryProductsLoaded) {
             final products = state.products;
 
             if (products.isEmpty) {
@@ -65,7 +63,7 @@ class _CategoryProductState extends State<CategoryProduct> {
                     ),
                     const SizedBox(height: 16),
                     TextMedium(
-                      'No ${widget.category.name.toLowerCase()} available',
+                      'No ${state.categoryName.toLowerCase()} available',
                       color: Colors.grey,
                     ),
                   ],
@@ -76,13 +74,11 @@ class _CategoryProductState extends State<CategoryProduct> {
             return SafeArea(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-
                   children: [
                     TextRegular(
-                      '${widget.category.name.toUpperCase()} (${products.length})',
+                      '${state.categoryName.toUpperCase()} (${products.length})',
                       fontWeight: FontManagerWeight.bold,
                     ),
                     24.verticalSpace,
@@ -116,23 +112,28 @@ class _CategoryProductState extends State<CategoryProduct> {
                                           top: Radius.circular(12),
                                         ),
                                         child: product.imageUrl.isNotEmpty
-                                            ? Image.network(
-                                                product.imageUrl,
-                                                fit: BoxFit.cover,
-                                                // width: 100,
-                                                errorBuilder:
-                                                    (
-                                                      context,
-                                                      error,
-                                                      stackTrace,
-                                                    ) => Container(
-                                                      color: Colors.grey[300],
-                                                      child: const Icon(
-                                                        Icons
-                                                            .image_not_supported,
-                                                        size: 48,
+                                            ? Center(
+                                                child: Image.network(
+                                                  product.imageUrl,
+                                                  fit: BoxFit.cover,
+                                                  errorBuilder:
+                                                      (
+                                                        context,
+                                                        error,
+                                                        stackTrace,
+                                                      ) => Container(
+                                                        color: AppColors
+                                                            .kBlcak100
+                                                            .withValues(
+                                                              alpha: 0.5,
+                                                            ),
+                                                        child: const Icon(
+                                                          Icons
+                                                              .image_not_supported,
+                                                          size: 48,
+                                                        ),
                                                       ),
-                                                    ),
+                                                ),
                                               )
                                             : Center(
                                                 child: Container(
@@ -142,7 +143,8 @@ class _CategoryProductState extends State<CategoryProduct> {
                                                   height: MediaQuery.sizeOf(
                                                     context,
                                                   ).height,
-                                                  color: Colors.grey[300],
+                                                  color: AppColors.kBlcak100
+                                                      .withValues(alpha: 0.5),
                                                   child: const Icon(
                                                     Icons.image_not_supported,
                                                     size: 48,
@@ -152,7 +154,7 @@ class _CategoryProductState extends State<CategoryProduct> {
                                       ),
                                       Positioned(
                                         top: 9,
-                                        right: 0,
+                                        right: 9,
                                         child: SvgPicture.asset(
                                           AppSvgs.kHeart,
                                           width: 24,
@@ -162,17 +164,17 @@ class _CategoryProductState extends State<CategoryProduct> {
                                     ],
                                   ),
                                 ),
-
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
-                                    horizontal: 4,
-                                    vertical: 8,
+                                    horizontal: 8,
+                                    vertical: 16,
                                   ),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      TextSmall(
+                                      TextRegular(
+                                        fontSizes: 14.fs,
                                         product.name,
                                         color: AppColors.kBlcak100,
                                       ),
@@ -197,7 +199,7 @@ class _CategoryProductState extends State<CategoryProduct> {
             );
           }
 
-          if (state is ProductError) {
+          if (state is CategoryError) {
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -208,8 +210,8 @@ class _CategoryProductState extends State<CategoryProduct> {
                   const SizedBox(height: 16),
                   AppButton(
                     onTap: () {
-                      context.read<ProductBloc>().add(
-                        LoadProductsByCategory(widget.category.id.trim()),
+                      context.read<CategoryBloc>().add(
+                        LoadCategoryProducts(widget.category.id.trim()),
                       );
                     },
                     'Retry',
@@ -218,6 +220,7 @@ class _CategoryProductState extends State<CategoryProduct> {
               ),
             );
           }
+
           return const Center(child: Text('No data'));
         },
       ),

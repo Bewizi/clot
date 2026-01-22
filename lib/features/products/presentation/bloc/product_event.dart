@@ -20,3 +20,7 @@ class LoadProductById extends ProductEvent {
 
   LoadProductById(this.productId);
 }
+
+final class LoadTopSellingProducts extends ProductEvent {}
+
+final class LoadNewInProducts extends ProductEvent {}
