@@ -104,4 +104,52 @@ class FirebaseProductsRepository implements ProductRepository {
       throw Exception('Failed to fetch product: $e');
     }
   }
+
+  @override
+  Future<List<Product>> getTopSellingProducts({int limit = 10}) async {
+    try {
+      final categories = await getCategories();
+      List<Product> topSellingProducts = [];
+
+      for (var category in categories) {
+        final snapshot = await _firestore
+            .collection(category.id.trim())
+            .where('isTopSelling', isEqualTo: true)
+            .get();
+        topSellingProducts.addAll(
+          snapshot.docs.map((doc) => Product.fromMap(doc.data(), doc.id)),
+        );
+      }
+
+      topSellingProducts.sort((a, b) => b.salesCount.compareTo(a.salesCount));
+
+      return topSellingProducts.take(10).toList();
+    } catch (e) {
+      throw Exception('Failed to fetch top selling products: $e');
+    }
+  }
+
+  @override
+  Future<List<Product>> getNewInProducts({int limit = 10}) async {
+    try {
+      final categories = await getCategories();
+      List<Product> newInProducts = [];
+
+      for (var category in categories) {
+        final snapshot = await _firestore
+            .collection(category.id.trim())
+            .where('isNewIn', isEqualTo: true)
+            .get();
+        newInProducts.addAll(
+          snapshot.docs.map((doc) => Product.fromMap(doc.data(), doc.id)),
+        );
+      }
+
+      newInProducts.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+
+      return newInProducts.take(10).toList();
+    } catch (e) {
+      throw Exception('Failed to fetch new in products: $e');
+    }
+  }
 }
