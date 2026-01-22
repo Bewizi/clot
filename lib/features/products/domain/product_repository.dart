@@ -11,4 +11,10 @@ abstract class ProductRepository {
   Future<List<Product>> getProductsByCategory(String categoryId);
 
   Future<Product?> getProductById(String id);
+
+  Future<List<Product>> getTopSellingProducts({int limit = 10});
+
+  Future<List<Product>> getNewInProducts({int limit = 10});
+
+  // Future<List<Product>> getLikedProducts();
 }
