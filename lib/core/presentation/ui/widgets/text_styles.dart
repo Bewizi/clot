@@ -12,6 +12,7 @@ class AppText extends StatelessWidget {
     this.color,
     this.fontSizes,
     this.fontWeight,
+    this.softWrap,
   });
 
   final String text;
@@ -20,6 +21,7 @@ class AppText extends StatelessWidget {
   final Color? color;
   final FontWeight? fontWeight;
   final double? fontSizes;
+  final bool? softWrap;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +33,7 @@ class AppText extends StatelessWidget {
         fontWeight: fontWeight,
       ).merge(styles),
       textAlign: textAlign,
+      softWrap: softWrap ?? true,
     );
   }
 }
@@ -50,8 +53,8 @@ class TextHeading extends AppText {
     return Text(
       text,
       style: TextStyle(
-        fontSize: 32,
-        fontWeight: FontManagerWeight.bold,
+        fontSize: fontSizes ?? 32,
+        fontWeight: fontWeight ?? FontManagerWeight.bold,
         color: color,
       ),
       textAlign: textAlign,
@@ -74,8 +77,8 @@ class TextMedium extends AppText {
     return Text(
       text,
       style: TextStyle(
-        fontSize: 24,
-        fontWeight: FontManagerWeight.semiBold,
+        fontSize: fontSizes ?? 24,
+        fontWeight: fontWeight ?? FontManagerWeight.semiBold,
         color: color,
       ),
       textAlign: textAlign,
@@ -98,11 +101,12 @@ class TextRegular extends AppText {
     return Text(
       text,
       style: TextStyle(
-        fontSize: 16.fs,
-        fontWeight: FontManagerWeight.regular,
+        fontSize: fontSizes ?? 16.fs,
+        fontWeight: fontWeight ?? FontManagerWeight.regular,
         color: color,
       ),
       textAlign: textAlign,
+      softWrap: softWrap ?? true,
     );
   }
 }
@@ -122,11 +126,12 @@ class TextSmall extends AppText {
     return Text(
       text,
       style: TextStyle(
-        fontSize: 12.fs,
-        fontWeight: FontManagerWeight.regular,
-        color: AppColors.kBlcak100,
+        fontSize: fontSizes ?? 12.fs,
+        fontWeight: fontWeight ?? FontManagerWeight.regular,
+        color: color ?? AppColors.kBlcak100,
       ),
       textAlign: textAlign,
+      softWrap: softWrap ?? true,
     );
   }
 }
