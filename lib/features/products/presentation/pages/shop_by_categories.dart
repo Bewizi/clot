@@ -2,7 +2,7 @@ import 'package:clot/core/presentation/constants/app_colors.dart';
 import 'package:clot/core/presentation/ui/extension/app_spacing_extension.dart';
 import 'package:clot/core/presentation/ui/widgets/app_back_button.dart';
 import 'package:clot/core/presentation/ui/widgets/text_styles.dart';
-import 'package:clot/features/products/presentation/bloc/product_bloc.dart';
+import 'package:clot/features/products/presentation/category_bloc/category_bloc.dart';
 import 'package:clot/features/products/presentation/pages/category_product.dart';
 import 'package:clot/features/products/presentation/widget/category_card.dart';
 import 'package:flutter/material.dart';
@@ -22,28 +22,8 @@ class _ShopByCategoriesState extends State<ShopByCategories> {
   @override
   void initState() {
     super.initState();
-    context.read<ProductBloc>().add(LoadCategories());
+    context.read<CategoryBloc>().add(LoadAllCategoriesForBrowsing());
   }
-
-  // void _navigateToCategoryProduct(BuildContext context, String categoryId) {
-  //   final cleanCategoryId = categoryId;
-  //
-  //   context.read<ProductBloc>().add(LoadProductsByCategory(cleanCategoryId));
-  //
-  //
-  //
-  //   switch (cleanCategoryId) {
-  //     case 'hoodies':
-  //       context.push(Hoodies.routeName);
-  //       break;
-  //     // Add more cases for other categories as needed
-  //     default:
-  //       // Handle unknown category ID
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         SnackBar(content: Text('Unknown category ID: $categoryId')),
-  //       );
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -64,14 +44,19 @@ class _ShopByCategoriesState extends State<ShopByCategories> {
             children: [
               TextMedium('Shop by Categories', color: AppColors.kBlcak100),
               16.verticalSpace,
-
-              BlocBuilder<ProductBloc, ProductState>(
+              BlocBuilder<CategoryBloc, CategoryState>(
                 builder: (context, state) {
                   if (state is CategoryLoading) {
-                    return Center(child: CircularProgressIndicator());
+                    return const Expanded(
+                      child: Center(child: CircularProgressIndicator()),
+                    );
                   }
 
-                  if (state is CategoriesLoaded) {
+                  if (state is CategoryError) {
+                    return Expanded(child: Center(child: Text(state.message)));
+                  }
+
+                  if (state is CategoriesListLoaded) {
                     return Expanded(
                       child: ListView.builder(
                         itemCount: state.categories.length,
@@ -91,7 +76,10 @@ class _ShopByCategoriesState extends State<ShopByCategories> {
                       ),
                     );
                   }
-                  return SizedBox.shrink();
+
+                  return const Expanded(
+                    child: Center(child: Text('No categories')),
+                  );
                 },
               ),
             ],
