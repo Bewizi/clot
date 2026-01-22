@@ -5,6 +5,8 @@ import 'package:clot/core/presentation/constants/icon_size_manager.dart';
 import 'package:clot/core/presentation/ui/extension/app_spacing_extension.dart';
 import 'package:clot/core/presentation/ui/widgets/icon_container.dart';
 import 'package:clot/core/presentation/ui/widgets/text_styles.dart';
+import 'package:clot/features/home/presentation/widget/new_in_product.dart';
+import 'package:clot/features/home/presentation/widget/top_selling.dart';
 import 'package:clot/features/products/presentation/bloc/product_bloc.dart';
 import 'package:clot/features/products/presentation/pages/shop_by_categories.dart';
 import 'package:flutter/material.dart';
@@ -45,11 +47,13 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    // Load all home data once
     context.read<ProductBloc>().add(LoadCategories());
+    context.read<ProductBloc>().add(LoadTopSellingProducts());
+    context.read<ProductBloc>().add(LoadNewInProducts());
   }
 
   final List<String> list = ['Men', 'Women'];
-
   String dropDownValue = 'Men';
 
   @override
@@ -159,65 +163,77 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                     24.verticalSpace,
-                    BlocBuilder<ProductBloc, ProductState>(
-                      builder: (context, state) {
-                        if (state is CategoryLoading) {
-                          return Center(
-                            child: const CircularProgressIndicator(),
-                          );
-                        }
+                    SingleChildScrollView(
+                      child: BlocBuilder<ProductBloc, ProductState>(
+                        builder: (context, state) {
+                          if (state is ProductError) {
+                            // return Center(
+                            //   child: const CircularProgressIndicator(),
+                            // );
+                            return Center(child: Text(state.message));
+                          }
 
-                        if (state is CategoriesLoaded) {
-                          return SizedBox(
-                            height: 200,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) {
-                                final data = state.categories[index];
-                                return Column(
-                                  crossAxisAlignment: .center,
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(12),
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                          left: 14,
-                                        ),
-                                        child: Image.network(
-                                          data.imageUrl,
-                                          width: 80,
-                                          height: 80,
-                                          fit: BoxFit.cover,
-                                          errorBuilder:
-                                              (
-                                                context,
-                                                error,
-                                                stackTrace,
-                                              ) => const Icon(
-                                                Icons
-                                                    .image_not_supported_rounded,
-                                                size: 16,
-                                              ),
+                          if (state is HomeDataLoaded) {
+                            return SizedBox(
+                              height: 150,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  final data = state.categories[index];
+                                  return Column(
+                                    crossAxisAlignment: .center,
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(12),
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                            left: 14,
+                                          ),
+                                          child: Image.network(
+                                            data.imageUrl,
+                                            width: 80,
+                                            height: 80,
+                                            fit: BoxFit.cover,
+                                            errorBuilder:
+                                                (
+                                                  context,
+                                                  error,
+                                                  stackTrace,
+                                                ) => const Icon(
+                                                  Icons
+                                                      .image_not_supported_rounded,
+                                                  size: 16,
+                                                ),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    8.verticalSpace,
-                                    TextSmall(
-                                      data.name,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                );
-                              },
+                                      8.verticalSpace,
+                                      TextSmall(
+                                        data.name,
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ],
+                                  );
+                                },
 
-                              itemCount: state.categories.length,
-                            ),
+                                itemCount: state.categories.length,
+                              ),
+                            );
+                          }
+
+                          return const Center(
+                            child: CircularProgressIndicator(),
                           );
-                        } else {
-                          return const SizedBox.shrink();
-                        }
-                      },
+                        },
+                      ),
                     ),
+                    24.verticalSpace,
+
+                    const TopSelling(),
+
+                    24.verticalSpace,
+
+                    const NewInProduct(),
                   ],
                 ),
               ],
