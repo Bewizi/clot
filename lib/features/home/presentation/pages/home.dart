@@ -24,26 +24,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // sign out
-
-  // Future<void> _signOut(BuildContext context) async {
-  //   try {
-  //     await FirebaseAuth.instance.signOut();
-  //     // Show success message
-  //     if (context.mounted) {
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         const SnackBar(content: Text('Signed out successfully')),
-  //       );
-  //     }
-  //   } catch (e) {
-  //     if (context.mounted) {
-  //       ScaffoldMessenger.of(
-  //         context,
-  //       ).showSnackBar(SnackBar(content: Text('Error signing out: $e')));
-  //     }
-  //   }
-  // }
-
   @override
   void initState() {
     super.initState();
@@ -62,182 +42,162 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Center(
-            child: Column(
-              crossAxisAlignment: .start,
-
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    // user image rounded inside of ClipRRect
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: Image.asset(
-                        '',
-                        width: 50,
-                        height: 50,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) {
-                          return Icon(
-                            Icons.person,
-                            size: 50,
-                            color: AppColors.kBlcak100,
-                          );
-                        },
-                      ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // user image rounded inside of ClipRRect
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(100),
+                    child: Image.asset(
+                      '',
+                      width: 50,
+                      height: 50,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Icon(
+                          Icons.person,
+                          size: 50,
+                          color: AppColors.kBlcak100,
+                        );
+                      },
                     ),
+                  ),
 
-                    16.horizontalSpace,
+                  16.horizontalSpace,
 
-                    // dropDownMenu
-                    Expanded(
-                      child: Center(
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 14,
-                            vertical: 12,
-                          ),
-                          height: ValueManager.iconContainerSize,
-                          decoration: BoxDecoration(
-                            color: AppColors.kLightGrey,
-                            borderRadius: BorderRadius.circular(100),
-                          ),
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton(
-                              value: dropDownValue,
-                              icon: SvgPicture.asset(
-                                AppSvgs.kArrowDown,
-                                width: 16,
-                                height: 16,
-                                fit: BoxFit.cover,
-                              ),
-                              items: list.map((e) {
-                                return DropdownMenuItem<String>(
-                                  value: e,
-                                  child: TextSmall(e),
-                                );
-                              }).toList(),
-                              onChanged: (value) {
-                                setState(() {
-                                  dropDownValue = value!;
-                                });
-                              },
+                  // dropDownMenu
+                  Expanded(
+                    child: Center(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 14,
+                          vertical: 12,
+                        ),
+                        height: ValueManager.iconContainerSize,
+                        decoration: BoxDecoration(
+                          color: AppColors.kLightGrey,
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton(
+                            value: dropDownValue,
+                            icon: SvgPicture.asset(
+                              AppSvgs.kArrowDown,
+                              width: 16,
+                              height: 16,
+                              fit: BoxFit.cover,
                             ),
+                            items: list.map((e) {
+                              return DropdownMenuItem<String>(
+                                value: e,
+                                child: TextSmall(e),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                dropDownValue = value!;
+                              });
+                            },
                           ),
                         ),
                       ),
                     ),
+                  ),
 
-                    // cart
-                    IconContainer(
-                      backgroundColor: AppColors.kPrimary,
-                      child: SvgPicture.asset(
-                        AppSvgs.kCart,
-                        width: 16,
-                        height: 16,
-                        fit: BoxFit.cover,
-                      ),
+                  // cart
+                  IconContainer(
+                    backgroundColor: AppColors.kPrimary,
+                    child: SvgPicture.asset(
+                      AppSvgs.kCart,
+                      width: 16,
+                      height: 16,
+                      fit: BoxFit.cover,
                     ),
-                  ],
-                ),
+                  ),
+                ],
+              ),
 
-                24.verticalSpace,
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        TextRegular(
-                          'Categories',
-                          fontWeight: FontManagerWeight.bold,
-                        ),
-                        InkWell(
-                          onTap: () => context.push(ShopByCategories.routeName),
-                          child: TextRegular(
-                            'See All',
-                            color: AppColors.kBlcak100,
-                          ),
-                        ),
-                      ],
-                    ),
-                    24.verticalSpace,
-                    SingleChildScrollView(
-                      child: BlocBuilder<ProductBloc, ProductState>(
-                        builder: (context, state) {
-                          if (state is ProductError) {
-                            // return Center(
-                            //   child: const CircularProgressIndicator(),
-                            // );
-                            return Center(child: Text(state.message));
-                          }
+              24.verticalSpace,
 
-                          if (state is HomeDataLoaded) {
-                            return SizedBox(
-                              height: 150,
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (context, index) {
-                                  final data = state.categories[index];
-                                  return Column(
-                                    crossAxisAlignment: .center,
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(12),
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                            left: 14,
-                                          ),
-                                          child: Image.network(
-                                            data.imageUrl,
-                                            width: 80,
-                                            height: 80,
-                                            fit: BoxFit.cover,
-                                            errorBuilder:
-                                                (
-                                                  context,
-                                                  error,
-                                                  stackTrace,
-                                                ) => const Icon(
-                                                  Icons
-                                                      .image_not_supported_rounded,
-                                                  size: 16,
-                                                ),
-                                          ),
-                                        ),
-                                      ),
-                                      8.verticalSpace,
-                                      TextSmall(
-                                        data.name,
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ],
-                                  );
-                                },
+              // Categories section (not scrollable with the rest of the content)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextRegular('Categories', fontWeight: FontManagerWeight.bold),
+                  InkWell(
+                    onTap: () => context.push(ShopByCategories.routeName),
+                    child: TextRegular('See All', color: AppColors.kBlcak100),
+                  ),
+                ],
+              ),
+              24.verticalSpace,
+              BlocBuilder<ProductBloc, ProductState>(
+                builder: (context, state) {
+                  if (state is ProductError) {
+                    return Center(child: Text(state.message));
+                  }
 
-                                itemCount: state.categories.length,
+                  if (state is HomeDataLoaded) {
+                    return SizedBox(
+                      height: 150,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          final data = state.categories[index];
+                          return Column(
+                            crossAxisAlignment: .center,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 14),
+                                  child: Image.network(
+                                    data.imageUrl,
+                                    width: 80,
+                                    height: 80,
+                                    fit: BoxFit.cover,
+                                    errorBuilder:
+                                        (context, error, stackTrace) =>
+                                            const Icon(
+                                              Icons.image_not_supported_rounded,
+                                              size: 16,
+                                            ),
+                                  ),
+                                ),
                               ),
-                            );
-                          }
-
-                          return const Center(
-                            child: CircularProgressIndicator(),
+                              8.verticalSpace,
+                              TextSmall(data.name, textAlign: TextAlign.center),
+                            ],
                           );
                         },
+                        itemCount: state.categories.length,
                       ),
-                    ),
-                    24.verticalSpace,
+                    );
+                  }
 
-                    const TopSelling(),
+                  return const Center(child: CircularProgressIndicator());
+                },
+              ),
 
-                    24.verticalSpace,
+              24.verticalSpace,
 
-                    const NewInProduct(),
-                  ],
+              // Scrollable content
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const TopSelling(),
+                      24.verticalSpace,
+                      const NewInProduct(),
+                    ],
+                  ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
