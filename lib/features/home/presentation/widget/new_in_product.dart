@@ -1,6 +1,8 @@
 import 'package:clot/core/presentation/constants/app_colors.dart';
+import 'package:clot/core/presentation/constants/app_svgs.dart';
 import 'package:clot/core/presentation/constants/font_manager.dart';
 import 'package:clot/core/presentation/ui/extension/app_spacing_extension.dart';
+import 'package:clot/core/presentation/ui/widgets/app_card.dart';
 import 'package:clot/core/presentation/ui/widgets/text_styles.dart';
 import 'package:clot/features/products/presentation/bloc/product_bloc.dart';
 import 'package:flutter/material.dart';
@@ -52,71 +54,11 @@ class NewInProduct extends StatelessWidget {
                   itemCount: state.newInProducts.length,
                   itemBuilder: (context, index) {
                     final product = state.newInProducts[index];
-                    return Container(
-                      padding: EdgeInsets.symmetric(vertical: 2),
-                      margin: EdgeInsets.only(left: 16),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: AppColors.kLightGrey,
-                      ),
-                      width: MediaQuery.sizeOf(context).width * 0.45,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: ClipRRect(
-                              child: product.imageUrl.isNotEmpty
-                                  ? Center(
-                                      child: Image.network(
-                                        product.imageUrl,
-                                        fit: BoxFit.cover,
-                                        width:
-                                            MediaQuery.sizeOf(context).width *
-                                            0.225,
-                                        height:
-                                            MediaQuery.sizeOf(context).height *
-                                            0.9,
-                                        errorBuilder:
-                                            (context, error, stackTrace) =>
-                                                Container(
-                                                  color: AppColors.kBlcak100
-                                                      .withValues(alpha: 0.5),
-                                                  child: const Icon(
-                                                    Icons.image_not_supported,
-                                                    size: 48,
-                                                  ),
-                                                ),
-                                      ),
-                                    )
-                                  : Center(
-                                      child: Container(
-                                        width: MediaQuery.sizeOf(context).width,
-                                        height: MediaQuery.sizeOf(
-                                          context,
-                                        ).height,
-                                        color: AppColors.kBlcak100.withValues(
-                                          alpha: 0.5,
-                                        ),
-                                        child: const Icon(
-                                          Icons.image_not_supported,
-                                          size: 48,
-                                        ),
-                                      ),
-                                    ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(product.name),
-                                Text(product.price),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
+                    return AppCard(
+                      image: product.imageUrl,
+                      icon: AppSvgs.kHeart,
+                      name: product.name,
+                      price: product.price,
                     );
                   },
                 ),
