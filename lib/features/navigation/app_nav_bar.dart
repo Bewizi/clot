@@ -2,6 +2,7 @@ import 'package:clot/core/presentation/constants/app_colors.dart';
 import 'package:clot/core/presentation/constants/app_svgs.dart';
 import 'package:clot/features/home/presentation/pages/home.dart';
 import 'package:clot/features/notification/presentation/pages/notification_screen.dart';
+import 'package:clot/features/orders/presentation/pages/order_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
@@ -23,7 +24,7 @@ class AppNavBar extends StatelessWidget {
         break;
       // receipt page
       case 2:
-        context.go(HomePage.routeName);
+        context.go(OrderScreen.routeName);
         break;
       // profile page
       case 3:
