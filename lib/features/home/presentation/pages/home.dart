@@ -7,6 +7,7 @@ import 'package:clot/core/presentation/ui/widgets/icon_container.dart';
 import 'package:clot/core/presentation/ui/widgets/text_styles.dart';
 import 'package:clot/features/home/presentation/widget/new_in_product.dart';
 import 'package:clot/features/home/presentation/widget/top_selling.dart';
+import 'package:clot/features/navigation/app_nav_bar.dart';
 import 'package:clot/features/products/presentation/bloc/product_bloc.dart';
 import 'package:clot/features/products/presentation/pages/shop_by_categories.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +40,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: AppNavBar(currentIndex: 0),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
