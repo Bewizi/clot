@@ -7,6 +7,7 @@ import 'package:clot/features/auth/presentation/pages/sign_in/sign_in.dart';
 import 'package:clot/features/auth/presentation/pages/sign_up/sign_up.dart';
 import 'package:clot/features/auth/presentation/pages/tell_us_about_yourself/tell_us_about_yourself.dart';
 import 'package:clot/features/home/presentation/pages/home.dart';
+import 'package:clot/features/notification/presentation/pages/notification_screen.dart';
 import 'package:clot/features/products/domain/category.dart';
 import 'package:clot/features/products/presentation/pages/category_product.dart';
 import 'package:clot/features/products/presentation/pages/shop_by_categories.dart';
@@ -130,6 +131,12 @@ final GoRouter appRoute = GoRouter(
 
         return CategoryProduct(category: category);
       },
+    ),
+
+    GoRoute(
+      path: NotificationScreen.routeName,
+      name: 'notifications',
+      builder: (context, state) => const NotificationScreen(),
     ),
   ],
 );
