@@ -32,19 +32,11 @@ class NewInProduct extends StatelessWidget {
           builder: (context, state) {
             if (state is HomeDataLoaded) {
               if (state.isNewInLoading) {
-                return const Center(
-                  child: SizedBox(
-                    height: 200,
-                    child: Center(child: CircularProgressIndicator()),
-                  ),
-                );
+                return const Center(child: CircularProgressIndicator());
               }
 
               if (state.newInProducts.isEmpty) {
-                return const SizedBox(
-                  height: 200,
-                  child: Center(child: Text('No new in products')),
-                );
+                return const Center(child: Text('No new in products'));
               }
 
               return SizedBox(
@@ -54,27 +46,24 @@ class NewInProduct extends StatelessWidget {
                   itemCount: state.newInProducts.length,
                   itemBuilder: (context, index) {
                     final product = state.newInProducts[index];
-                    return AppCard(
-                      image: product.imageUrl,
-                      icon: AppSvgs.kHeart,
-                      name: product.name,
-                      price: product.price,
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 16),
+                      child: AppCard(
+                        image: product.imageUrl,
+                        icon: AppSvgs.kHeart,
+                        name: product.name,
+                        price: product.price,
+                      ),
                     );
                   },
                 ),
               );
             }
             if (state is ProductError) {
-              return SizedBox(
-                height: 200,
-                child: Center(child: Text(state.message)),
-              );
+              return Center(child: Text(state.message));
             }
             // initial loading
-            return const SizedBox(
-              height: 200,
-              child: Center(child: CircularProgressIndicator()),
-            );
+            return const Center(child: CircularProgressIndicator());
           },
         ),
       ],
