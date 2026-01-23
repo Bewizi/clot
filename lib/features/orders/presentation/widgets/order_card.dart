@@ -1,4 +1,5 @@
 import 'package:clot/core/presentation/constants/app_colors.dart';
+import 'package:clot/core/presentation/constants/app_svgs.dart';
 import 'package:clot/core/presentation/ui/extension/app_spacing_extension.dart';
 import 'package:clot/core/presentation/ui/widgets/text_styles.dart';
 import 'package:flutter/material.dart';
@@ -9,11 +10,13 @@ class OrderCard extends StatelessWidget {
     super.key,
     required this.icon,
     required this.text,
+    required this.item,
     this.onTap,
   });
 
   final String icon;
   final String text;
+  final String item;
   final VoidCallback? onTap;
 
   @override
@@ -41,7 +44,22 @@ class OrderCard extends StatelessWidget {
             ),
 
             16.horizontalSpace,
-            Expanded(child: TextRegular(text, color: AppColors.kBlcak100)),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextRegular(text, color: AppColors.kBlcak100),
+                  4.verticalSpace,
+                  TextSmall(
+                    item,
+                    color: AppColors.kBlcak100.withValues(alpha: 0.5),
+                  ),
+                ],
+              ),
+            ),
+
+            SvgPicture.asset(AppSvgs.kArrowRight, width: 32, height: 32),
           ],
         ),
       ),
