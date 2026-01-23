@@ -10,6 +10,7 @@ class IconContainer extends StatelessWidget {
     this.onTap,
     this.backgroundColor,
   });
+
   final Widget child;
   final VoidCallback? onTap;
   final Color? backgroundColor;
