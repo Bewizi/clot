@@ -7,4 +7,10 @@ class AppSvgs {
 
   static const String kCart = 'assets/svgs/bag.svg';
   static const String kHeart = 'assets/svgs/heart_icon.svg';
+
+  //   navbar icons
+  static const String kHome = 'assets/svgs/home_icon.svg';
+  static const String kNotification = 'assets/svgs/notificationbing_icon.svg';
+  static const String kReceipt = 'assets/svgs/receipt_icon.svg';
+  static const String kProfile = 'assets/svgs/profile_icon.svg';
 }
