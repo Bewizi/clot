@@ -4,6 +4,7 @@ class AppSvgs {
   static const String google = 'assets/svgs/google_icon.svg';
   static const String kArrowLeft = 'assets/svgs/arrowleft_icon.svg';
   static const String kArrowDown = 'assets/svgs/arrowdown_icon.svg';
+  static const String kArrowRight = 'assets/svgs/arrowright_icon.svg';
 
   static const String kCart = 'assets/svgs/bag.svg';
   static const String kHeart = 'assets/svgs/heart_icon.svg';
