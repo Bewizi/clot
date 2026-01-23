@@ -26,28 +26,23 @@ class AppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return GestureDetector(
-          onTap: onTap,
-          child: Container(
-            width: constraints.maxWidth,
-            padding: const EdgeInsets.symmetric(vertical: 14),
-            decoration: BoxDecoration(
-              color: color,
-              borderRadius: BorderRadius.circular(borderRadius),
-            ),
-            alignment: Alignment.center,
-            child:
-                child ??
-                TextRegular(
-                  text,
-                  color: textColor,
-                  fontWeight: FontWeight.bold,
-                ),
-          ),
-        );
-      },
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        // width: constraints.maxWidth,
+        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 24),
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(borderRadius),
+          border: borderColor != null
+              ? Border.all(color: borderColor!, width: borderWidth)
+              : null,
+        ),
+        alignment: Alignment.center,
+        child:
+            child ??
+            TextRegular(text, color: textColor, fontWeight: FontWeight.bold),
+      ),
     );
   }
 }
