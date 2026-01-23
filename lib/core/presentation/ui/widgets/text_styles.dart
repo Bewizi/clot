@@ -13,6 +13,8 @@ class AppText extends StatelessWidget {
     this.fontSizes,
     this.fontWeight,
     this.softWrap,
+    this.maxLines,
+    this.overFlow,
   });
 
   final String text;
@@ -22,6 +24,8 @@ class AppText extends StatelessWidget {
   final FontWeight? fontWeight;
   final double? fontSizes;
   final bool? softWrap;
+  final int? maxLines;
+  final TextOverflow? overFlow;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +38,8 @@ class AppText extends StatelessWidget {
       ).merge(styles),
       textAlign: textAlign,
       softWrap: softWrap ?? true,
+      maxLines: maxLines,
+      overflow: overFlow,
     );
   }
 }
@@ -46,6 +52,9 @@ class TextHeading extends AppText {
     super.color,
     super.fontWeight,
     super.fontSizes,
+    super.softWrap,
+    super.maxLines,
+    super.overFlow,
   });
 
   @override
@@ -58,6 +67,9 @@ class TextHeading extends AppText {
         color: color,
       ),
       textAlign: textAlign,
+      softWrap: softWrap,
+      maxLines: maxLines,
+      overflow: overFlow,
     );
   }
 }
@@ -70,6 +82,9 @@ class TextMedium extends AppText {
     super.color,
     super.fontWeight,
     super.fontSizes,
+    super.softWrap,
+    super.maxLines,
+    super.overFlow,
   });
 
   @override
@@ -82,6 +97,9 @@ class TextMedium extends AppText {
         color: color,
       ),
       textAlign: textAlign,
+      softWrap: softWrap,
+      maxLines: maxLines,
+      overflow: overFlow,
     );
   }
 }
@@ -94,6 +112,9 @@ class TextRegular extends AppText {
     super.color,
     super.fontWeight,
     super.fontSizes,
+    super.softWrap,
+    super.maxLines,
+    super.overFlow,
   });
 
   @override
@@ -107,6 +128,8 @@ class TextRegular extends AppText {
       ),
       textAlign: textAlign,
       softWrap: softWrap ?? true,
+      maxLines: maxLines,
+      overflow: overFlow,
     );
   }
 }
@@ -119,6 +142,9 @@ class TextSmall extends AppText {
     super.color,
     super.fontWeight,
     super.fontSizes,
+    super.softWrap,
+    super.maxLines,
+    super.overFlow,
   });
 
   @override
@@ -132,6 +158,8 @@ class TextSmall extends AppText {
       ),
       textAlign: textAlign,
       softWrap: softWrap ?? true,
+      maxLines: maxLines,
+      overflow: overFlow,
     );
   }
 }
