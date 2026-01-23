@@ -52,27 +52,24 @@ class TopSelling extends StatelessWidget {
                   itemCount: state.topSellingProducts.length,
                   itemBuilder: (context, index) {
                     final product = state.topSellingProducts[index];
-                    return AppCard(
-                      image: product.imageUrl,
-                      icon: AppSvgs.kHeart,
-                      name: product.name,
-                      price: product.price,
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 16),
+                      child: AppCard(
+                        image: product.imageUrl,
+                        icon: AppSvgs.kHeart,
+                        name: product.name,
+                        price: product.price,
+                      ),
                     );
                   },
                 ),
               );
             }
             if (state is ProductError) {
-              return SizedBox(
-                height: 200,
-                child: Center(child: Text(state.message)),
-              );
+              return Center(child: TextMedium(state.message));
             }
             // initial loading
-            return const SizedBox(
-              height: 200,
-              child: Center(child: CircularProgressIndicator()),
-            );
+            return const Center(child: CircularProgressIndicator());
           },
         ),
       ],
