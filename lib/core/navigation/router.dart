@@ -8,6 +8,7 @@ import 'package:clot/features/auth/presentation/pages/sign_up/sign_up.dart';
 import 'package:clot/features/auth/presentation/pages/tell_us_about_yourself/tell_us_about_yourself.dart';
 import 'package:clot/features/home/presentation/pages/home.dart';
 import 'package:clot/features/notification/presentation/pages/notification_screen.dart';
+import 'package:clot/features/orders/presentation/pages/order_screen.dart';
 import 'package:clot/features/products/domain/category.dart';
 import 'package:clot/features/products/presentation/pages/category_product.dart';
 import 'package:clot/features/products/presentation/pages/shop_by_categories.dart';
@@ -137,6 +138,12 @@ final GoRouter appRoute = GoRouter(
       path: NotificationScreen.routeName,
       name: 'notifications',
       builder: (context, state) => const NotificationScreen(),
+    ),
+
+    GoRoute(
+      path: OrderScreen.routeName,
+      name: 'order',
+      builder: (context, state) => const OrderScreen(),
     ),
   ],
 );
