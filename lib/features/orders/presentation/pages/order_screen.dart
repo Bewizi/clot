@@ -6,6 +6,7 @@ import 'package:clot/core/presentation/ui/extension/app_spacing_extension.dart';
 import 'package:clot/core/presentation/ui/widgets/app_button.dart';
 import 'package:clot/core/presentation/ui/widgets/text_styles.dart';
 import 'package:clot/features/navigation/app_nav_bar.dart';
+import 'package:clot/features/orders/presentation/pages/order_details_screen.dart';
 import 'package:clot/features/orders/presentation/widgets/order_card.dart';
 import 'package:clot/features/products/presentation/pages/shop_by_categories.dart';
 import 'package:flutter/material.dart';
@@ -107,7 +108,8 @@ class _OrderScreenState extends State<OrderScreen> {
                             icon: AppSvgs.kReceipt,
                             text: order['orderId'],
                             item: order['orderItems'],
-                            onTap: () {},
+                            onTap: () =>
+                                context.push(OrderDetailsScreen.routeName),
                           );
                         },
                       ),
@@ -118,28 +120,28 @@ class _OrderScreenState extends State<OrderScreen> {
       ),
     );
   }
-}
 
-Widget _buildOrderTyp(
-  BuildContext context,
-  String orderType,
-  bool isSelected,
-  VoidCallback onTap,
-) {
-  return GestureDetector(
-    onTap: onTap,
-    child: Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(100),
-        color: isSelected ? AppColors.kPrimary : AppColors.kLightGrey,
-      ),
-      child: Center(
-        child: TextSmall(
-          orderType,
-          color: isSelected ? AppColors.kWhite100 : AppColors.kBlcak100,
+  Widget _buildOrderTyp(
+    BuildContext context,
+    String orderType,
+    bool isSelected,
+    VoidCallback onTap,
+  ) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(100),
+          color: isSelected ? AppColors.kPrimary : AppColors.kLightGrey,
+        ),
+        child: Center(
+          child: TextSmall(
+            orderType,
+            color: isSelected ? AppColors.kWhite100 : AppColors.kBlcak100,
+          ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }
