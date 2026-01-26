@@ -8,6 +8,7 @@ class AppSvgs {
 
   static const String kCart = 'assets/svgs/bag.svg';
   static const String kHeart = 'assets/svgs/heart_icon.svg';
+  static const String kCheckLine = 'assets/svgs/check-line_icon.svg';
 
   //   navbar icons
   static const String kHome = 'assets/svgs/home_icon.svg';
