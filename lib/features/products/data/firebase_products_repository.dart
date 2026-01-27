@@ -152,4 +152,21 @@ class FirebaseProductsRepository implements ProductRepository {
       throw Exception('Failed to fetch new in products: $e');
     }
   }
+
+  @override
+  Future<List<Product>> searchProducts(String query) async {
+    try {
+      final snapshot = await _firestore
+          .collection('products')
+          .orderBy('name')
+          .startAt([query])
+          .endAt(['$query\uf8ff'])
+          .get();
+      return snapshot.docs
+          .map((doc) => Product.fromMap(doc.data(), doc.id))
+          .toList();
+    } catch (e) {
+      throw Exception('Failed to search products: $e');
+    }
+  }
 }
