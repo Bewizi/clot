@@ -24,3 +24,9 @@ class LoadProductById extends ProductEvent {
 final class LoadTopSellingProducts extends ProductEvent {}
 
 final class LoadNewInProducts extends ProductEvent {}
+
+class SearchProducts extends ProductEvent {
+  final String query;
+
+  SearchProducts(this.query);
+}
