@@ -15,4 +15,8 @@ class AppSvgs {
   static const String kNotification = 'assets/svgs/notificationbing_icon.svg';
   static const String kReceipt = 'assets/svgs/receipt_icon.svg';
   static const String kProfile = 'assets/svgs/profile_icon.svg';
+
+  static const String kSearchIcon = 'assets/svgs/searchnormal_icon.svg';
+  static const String kSearchIcon2 = 'assets/svgs/search_icon.svg';
+  static const String kCloseIcon = 'assets/svgs/x_icon.svg';
 }
