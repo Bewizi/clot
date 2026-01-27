@@ -16,5 +16,7 @@ abstract class ProductRepository {
 
   Future<List<Product>> getNewInProducts({int limit = 10});
 
+  Future<List<Product>> searchProducts(String query);
+
   // Future<List<Product>> getLikedProducts();
 }
