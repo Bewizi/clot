@@ -19,6 +19,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     on<LoadProductById>(_onLoadProductById);
     on<LoadTopSellingProducts>(_onLoadTopSellingProducts);
     on<LoadNewInProducts>(_onLoadNewInProducts);
+    on<SearchProducts>(_onSearchProducts);
   }
 
   HomeDataLoaded _getCurrentHomeState() {
@@ -141,6 +142,23 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       );
     } catch (e) {
       emit(ProductError('Failed to load new in products: $e'));
+    }
+  }
+
+  Future<void> _onSearchProducts(
+    SearchProducts event,
+    Emitter<ProductState> emit,
+  ) async {
+    if (event.query.isEmpty) {
+      emit(ProductsLoaded([]));
+      return;
+    }
+    emit(ProductLoading());
+    try {
+      final products = await _productRepository.searchProducts(event.query);
+      emit(ProductsLoaded(products));
+    } catch (e) {
+      emit(ProductError('Failed to search products: $e'));
     }
   }
 }
