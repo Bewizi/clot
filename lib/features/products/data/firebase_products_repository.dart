@@ -156,15 +156,18 @@ class FirebaseProductsRepository implements ProductRepository {
   @override
   Future<List<Product>> searchProducts(String query) async {
     try {
-      final snapshot = await _firestore
-          .collection('products')
-          .orderBy('name')
-          .startAt([query])
-          .endAt(['$query\uf8ff'])
-          .get();
-      return snapshot.docs
-          .map((doc) => Product.fromMap(doc.data(), doc.id))
-          .toList();
+      final categories = await getCategories();
+      List<Product> products = [];
+      for (var category in categories) {
+        final snapshot = await _firestore
+            .collection(category.id.trim())
+            .where('name', isGreaterThanOrEqualTo: query)
+            .where('name', isLessThanOrEqualTo: '$query\uf8ff')
+            .get();
+        products.addAll(
+            snapshot.docs.map((doc) => Product.fromMap(doc.data(), doc.id)));
+      }
+      return products;
     } catch (e) {
       throw Exception('Failed to search products: $e');
     }
