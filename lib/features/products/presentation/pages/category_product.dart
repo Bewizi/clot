@@ -1,3 +1,4 @@
+import 'package:clot/core/presentation/constants/app_colors.dart';
 import 'package:clot/core/presentation/constants/app_svgs.dart';
 import 'package:clot/core/presentation/constants/font_manager.dart';
 import 'package:clot/core/presentation/ui/extension/app_spacing_extension.dart';
@@ -6,9 +7,11 @@ import 'package:clot/core/presentation/ui/widgets/app_button.dart';
 import 'package:clot/core/presentation/ui/widgets/app_card.dart';
 import 'package:clot/core/presentation/ui/widgets/text_styles.dart';
 import 'package:clot/features/products/domain/category.dart';
+import 'package:clot/features/products/presentation/bloc/product_bloc.dart';
 import 'package:clot/features/products/presentation/category_bloc/category_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 
 class CategoryProduct extends StatefulWidget {
   const CategoryProduct({super.key, required this.category});
@@ -22,11 +25,20 @@ class CategoryProduct extends StatefulWidget {
 }
 
 class _CategoryProductState extends State<CategoryProduct> {
+  late final TextEditingController _searchController;
+
   @override
   void initState() {
     super.initState();
+    _searchController = TextEditingController();
     final cleanCategoryId = widget.category.id.trim();
     context.read<CategoryBloc>().add(LoadCategoryProducts(cleanCategoryId));
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
   @override
@@ -75,6 +87,49 @@ class _CategoryProductState extends State<CategoryProduct> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // search field
+                    TextField(
+                      controller: _searchController,
+                      decoration: InputDecoration(
+                        hintText: 'Search ${state.categoryName.toLowerCase()}',
+                        prefixIcon: Padding(
+                          padding: const EdgeInsets.only(left: 20, right: 12),
+                          child: SvgPicture.asset(
+                            AppSvgs.kSearchIcon,
+                            height: 16,
+                            width: 16,
+                          ),
+                        ),
+                        suffixIcon: GestureDetector(
+                          onTap: () {
+                            _searchController.clear();
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 12, right: 20),
+                            child: SvgPicture.asset(
+                              AppSvgs.kCloseIcon,
+                              height: 16,
+                              width: 16,
+                            ),
+                          ),
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: 16,
+                        ),
+                        fillColor: AppColors.kLightGrey,
+                        filled: true,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(100),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                      onSubmitted: (query) {
+                        context.read<ProductBloc>().add(SearchProducts(query));
+                      },
+                    ),
+
+                    24.verticalSpace,
+
                     TextRegular(
                       '${state.categoryName.toUpperCase()} (${products.length})',
                       fontWeight: FontManagerWeight.bold,
@@ -118,12 +173,12 @@ class _CategoryProductState extends State<CategoryProduct> {
                   Text(state.message),
                   const SizedBox(height: 16),
                   AppButton(
+                    'Retry',
                     onTap: () {
                       context.read<CategoryBloc>().add(
                         LoadCategoryProducts(widget.category.id.trim()),
                       );
                     },
-                    'Retry',
                   ),
                 ],
               ),
@@ -136,100 +191,3 @@ class _CategoryProductState extends State<CategoryProduct> {
     );
   }
 }
-
-//
-// Card(
-// shape: RoundedRectangleBorder(
-// borderRadius: BorderRadius.circular(8),
-// ),
-// surfaceTintColor: Colors.transparent,
-// shadowColor: Colors.transparent,
-// child: Column(
-// crossAxisAlignment: CrossAxisAlignment.start,
-// children: [
-// Expanded(
-// child: Stack(
-// children: [
-// ClipRRect(
-// borderRadius: BorderRadius.vertical(
-// top: Radius.circular(12),
-// ),
-// child: product.imageUrl.isNotEmpty
-// ? Center(
-// child: Image.network(
-// product.imageUrl,
-// fit: BoxFit.cover,
-// errorBuilder:
-// (
-// context,
-// error,
-// stackTrace,
-// ) => Container(
-// color: AppColors
-//     .kBlcak100
-//     .withValues(
-// alpha: 0.5,
-// ),
-// child: const Icon(
-// Icons
-//     .image_not_supported,
-// size: 48,
-// ),
-// ),
-// ),
-// )
-//     : Center(
-// child: Container(
-// width: MediaQuery.sizeOf(
-// context,
-// ).width,
-// height: MediaQuery.sizeOf(
-// context,
-// ).height,
-// color: AppColors.kBlcak100
-//     .withValues(alpha: 0.5),
-// child: const Icon(
-// Icons.image_not_supported,
-// size: 48,
-// ),
-// ),
-// ),
-// ),
-// Positioned(
-// top: 9,
-// right: 9,
-// child: SvgPicture.asset(
-// AppSvgs.kHeart,
-// width: 24,
-// height: 24,
-// ),
-// ),
-// ],
-// ),
-// ),
-// Padding(
-// padding: const EdgeInsets.symmetric(
-// horizontal: 8,
-// vertical: 16,
-// ),
-// child: Column(
-// crossAxisAlignment:
-// CrossAxisAlignment.start,
-// children: [
-// TextRegular(
-// fontSizes: 14.fs,
-// product.name,
-// color: AppColors.kBlcak100,
-// ),
-// 8.verticalSpace,
-// TextSmall(
-// product.price,
-// color: AppColors.kBlcak100,
-// fontWeight: FontManagerWeight.bold,
-// ),
-// ],
-// ),
-// ),
-// ],
-// ),
-// );
