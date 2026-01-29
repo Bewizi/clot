@@ -9,6 +9,7 @@ import 'package:clot/core/presentation/ui/widgets/text_styles.dart';
 import 'package:clot/features/products/domain/category.dart';
 import 'package:clot/features/products/presentation/bloc/product_bloc.dart';
 import 'package:clot/features/products/presentation/category_bloc/category_bloc.dart';
+import 'package:clot/features/products/presentation/widget/filter_product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -40,6 +41,33 @@ class _CategoryProductState extends State<CategoryProduct> {
     _searchController.dispose();
     super.dispose();
   }
+
+  final List<Map<String, dynamic>> filters = const [
+    {
+      'text': '2',
+      'colors': AppColors.kPrimary,
+      'textColor': AppColors.kWhite100,
+      'icon': AppSvgs.kFilter,
+    },
+    {'text': 'On Sale', 'colors': AppColors.kLightGrey},
+    {
+      'text': 'Price',
+      'colors': AppColors.kPrimary,
+      'textColor': AppColors.kWhite100,
+      'icon': AppSvgs.kArrowDown,
+    },
+    {
+      'text': 'Sort  by',
+      'colors': AppColors.kLightGrey,
+      'icon': AppSvgs.kArrowDown,
+    },
+    {
+      'text': 'Men',
+      'colors': AppColors.kPrimary,
+      'textColor': AppColors.kWhite100,
+      'icon': AppSvgs.kArrowDown,
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -129,6 +157,27 @@ class _CategoryProductState extends State<CategoryProduct> {
                     ),
 
                     24.verticalSpace,
+
+                    SizedBox(
+                      height: MediaQuery.sizeOf(context).width * 0.06,
+                      child: ListView.separated(
+                        itemBuilder: (context, index) {
+                          final filter = filters[index];
+                          return FilterProduct(
+                            title: filter['text'],
+                            color: filter['colors'],
+                            textColor: filter['textColor'],
+                            icon: filter['icon'],
+                          );
+                        },
+                        separatorBuilder: (_, index) => 16.horizontalSpace,
+                        itemCount: filters.length,
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                      ),
+                    ),
+
+                    16.verticalSpace,
 
                     TextRegular(
                       '${state.categoryName.toUpperCase()} (${products.length})',
