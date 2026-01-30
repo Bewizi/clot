@@ -6,6 +6,7 @@ import 'package:clot/features/auth/presentation/pages/forgot_password/reset_pass
 import 'package:clot/features/auth/presentation/pages/sign_in/sign_in.dart';
 import 'package:clot/features/auth/presentation/pages/sign_up/sign_up.dart';
 import 'package:clot/features/auth/presentation/pages/tell_us_about_yourself/tell_us_about_yourself.dart';
+import 'package:clot/features/cart/presentation/pages/cart_page.dart';
 import 'package:clot/features/home/presentation/pages/home.dart';
 import 'package:clot/features/notification/presentation/pages/notification_screen.dart';
 import 'package:clot/features/orders/presentation/pages/order_details_screen.dart';
@@ -158,6 +159,12 @@ final GoRouter appRoute = GoRouter(
       path: ProductsScreen.routeName,
       name: 'products',
       builder: (context, state) => const ProductsScreen(),
+    ),
+
+    GoRoute(
+      path: CartPage.routeName,
+      name: 'add-to-cart',
+      builder: (context, state) => CartPage(),
     ),
   ],
 );
