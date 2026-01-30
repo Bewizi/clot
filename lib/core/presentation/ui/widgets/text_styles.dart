@@ -15,6 +15,7 @@ class AppText extends StatelessWidget {
     this.softWrap,
     this.maxLines,
     this.overFlow,
+    this.height,
   });
 
   final String text;
@@ -26,6 +27,7 @@ class AppText extends StatelessWidget {
   final bool? softWrap;
   final int? maxLines;
   final TextOverflow? overFlow;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +37,7 @@ class AppText extends StatelessWidget {
         color: color,
         fontSize: fontSizes,
         fontWeight: fontWeight,
+        height: height,
       ).merge(styles),
       textAlign: textAlign,
       softWrap: softWrap ?? true,
@@ -55,6 +58,7 @@ class TextHeading extends AppText {
     super.softWrap,
     super.maxLines,
     super.overFlow,
+    super.height,
   });
 
   @override
@@ -65,6 +69,7 @@ class TextHeading extends AppText {
         fontSize: fontSizes ?? 32,
         fontWeight: fontWeight ?? FontManagerWeight.bold,
         color: color,
+        height: height,
       ),
       textAlign: textAlign,
       softWrap: softWrap,
@@ -85,6 +90,7 @@ class TextMedium extends AppText {
     super.softWrap,
     super.maxLines,
     super.overFlow,
+    super.height,
   });
 
   @override
@@ -95,6 +101,7 @@ class TextMedium extends AppText {
         fontSize: fontSizes ?? 24,
         fontWeight: fontWeight ?? FontManagerWeight.semiBold,
         color: color,
+        height: height,
       ),
       textAlign: textAlign,
       softWrap: softWrap,
@@ -115,6 +122,7 @@ class TextRegular extends AppText {
     super.softWrap,
     super.maxLines,
     super.overFlow,
+    super.height,
   });
 
   @override
@@ -125,6 +133,7 @@ class TextRegular extends AppText {
         fontSize: fontSizes ?? 16.fs,
         fontWeight: fontWeight ?? FontManagerWeight.regular,
         color: color,
+        height: height,
       ),
       textAlign: textAlign,
       softWrap: softWrap ?? true,
@@ -145,6 +154,7 @@ class TextSmall extends AppText {
     super.softWrap,
     super.maxLines,
     super.overFlow,
+    super.height,
   });
 
   @override
@@ -155,6 +165,7 @@ class TextSmall extends AppText {
         fontSize: fontSizes ?? 12.fs,
         fontWeight: fontWeight ?? FontManagerWeight.regular,
         color: color ?? AppColors.kBlcak100,
+        height: height,
       ),
       textAlign: textAlign,
       softWrap: softWrap ?? true,
