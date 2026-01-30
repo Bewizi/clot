@@ -5,6 +5,7 @@ import 'package:clot/core/presentation/constants/icon_size_manager.dart';
 import 'package:clot/core/presentation/ui/extension/app_spacing_extension.dart';
 import 'package:clot/core/presentation/ui/widgets/icon_container.dart';
 import 'package:clot/core/presentation/ui/widgets/text_styles.dart';
+import 'package:clot/features/cart/presentation/pages/cart_page.dart';
 import 'package:clot/features/home/presentation/widget/new_in_product.dart';
 import 'package:clot/features/home/presentation/widget/top_selling.dart';
 import 'package:clot/features/navigation/app_nav_bar.dart';
@@ -111,6 +112,7 @@ class _HomePageState extends State<HomePage> {
 
                   // cart
                   IconContainer(
+                    onTap: () => context.push(CartPage.routeName),
                     backgroundColor: AppColors.kPrimary,
                     child: SvgPicture.asset(
                       AppSvgs.kCart,
