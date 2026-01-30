@@ -4,8 +4,10 @@ import 'package:clot/core/presentation/ui/extension/app_spacing_extension.dart';
 import 'package:clot/core/presentation/ui/widgets/app_card.dart';
 import 'package:clot/core/presentation/ui/widgets/text_styles.dart';
 import 'package:clot/features/products/presentation/bloc/product_bloc.dart';
+import 'package:clot/features/products/presentation/pages/products_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class TopSelling extends StatelessWidget {
   const TopSelling({super.key});
@@ -59,6 +61,7 @@ class TopSelling extends StatelessWidget {
                         icon: AppSvgs.kHeart,
                         name: product.name,
                         price: product.price,
+                        onTap: () => context.push(ProductsScreen.routeName),
                       ),
                     );
                   },
