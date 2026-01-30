@@ -10,6 +10,10 @@ import 'package:clot/features/products/domain/category.dart';
 import 'package:clot/features/products/presentation/bloc/product_bloc.dart';
 import 'package:clot/features/products/presentation/category_bloc/category_bloc.dart';
 import 'package:clot/features/products/presentation/widget/filter_product.dart';
+import 'package:clot/features/products/presentation/widget/mixins/deals_btn_sheet_modal.dart';
+import 'package:clot/features/products/presentation/widget/mixins/gender_btn_sheet_modal.dart';
+import 'package:clot/features/products/presentation/widget/mixins/price_btn_sheet_modal.dart';
+import 'package:clot/features/products/presentation/widget/mixins/sort_by_btn_sheet_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -25,7 +29,12 @@ class CategoryProduct extends StatefulWidget {
   State<CategoryProduct> createState() => _CategoryProductState();
 }
 
-class _CategoryProductState extends State<CategoryProduct> {
+class _CategoryProductState extends State<CategoryProduct>
+    with
+        SortByBtnSheetModal,
+        GenderBtnSheetModal,
+        DealsBtnSheetModal,
+        PriceBtnSheetModal {
   late final TextEditingController _searchController;
 
   @override
@@ -34,6 +43,44 @@ class _CategoryProductState extends State<CategoryProduct> {
     _searchController = TextEditingController();
     final cleanCategoryId = widget.category.id.trim();
     context.read<CategoryBloc>().add(LoadCategoryProducts(cleanCategoryId));
+    filters = [
+      {
+        'text': '2',
+        'colors': AppColors.kPrimary,
+        'textColor': AppColors.kWhite100,
+        'icon': AppSvgs.kFilter,
+        'iconColor': AppColors.kWhite100,
+        'reverseOrder': true,
+      },
+      {
+        'text': 'On Sale',
+        'colors': AppColors.kLightGrey,
+        'onTap': () => showDealsModalSheet(context),
+      },
+      {
+        'text': 'Price',
+        'colors': AppColors.kPrimary,
+        'textColor': AppColors.kWhite100,
+        'icon': AppSvgs.kArrowDown,
+        'iconColor': AppColors.kWhite100,
+        'onTap': () => showPriceModalSheet(context),
+      },
+      {
+        'text': 'Sort  by',
+        'colors': AppColors.kLightGrey,
+        'icon': AppSvgs.kArrowDown,
+        'iconColor': AppColors.kBlcak100,
+        'onTap': () => showSortByModalSheet(context),
+      },
+      {
+        'text': 'Men',
+        'colors': AppColors.kPrimary,
+        'textColor': AppColors.kWhite100,
+        'icon': AppSvgs.kArrowDown,
+        'iconColor': AppColors.kWhite100,
+        'onTap': () => showGenderModalSheet(context),
+      },
+    ];
   }
 
   @override
@@ -42,32 +89,7 @@ class _CategoryProductState extends State<CategoryProduct> {
     super.dispose();
   }
 
-  final List<Map<String, dynamic>> filters = const [
-    {
-      'text': '2',
-      'colors': AppColors.kPrimary,
-      'textColor': AppColors.kWhite100,
-      'icon': AppSvgs.kFilter,
-    },
-    {'text': 'On Sale', 'colors': AppColors.kLightGrey},
-    {
-      'text': 'Price',
-      'colors': AppColors.kPrimary,
-      'textColor': AppColors.kWhite100,
-      'icon': AppSvgs.kArrowDown,
-    },
-    {
-      'text': 'Sort  by',
-      'colors': AppColors.kLightGrey,
-      'icon': AppSvgs.kArrowDown,
-    },
-    {
-      'text': 'Men',
-      'colors': AppColors.kPrimary,
-      'textColor': AppColors.kWhite100,
-      'icon': AppSvgs.kArrowDown,
-    },
-  ];
+  late final List<Map<String, dynamic>> filters;
 
   @override
   Widget build(BuildContext context) {
@@ -168,6 +190,9 @@ class _CategoryProductState extends State<CategoryProduct> {
                             color: filter['colors'],
                             textColor: filter['textColor'],
                             icon: filter['icon'],
+                            iconColor: filter['iconColor'],
+                            reverseOrder: filter['reverseOrder'] ?? false,
+                            onTap: filter['onTap'] as VoidCallback?,
                           );
                         },
                         separatorBuilder: (_, index) => 16.horizontalSpace,
