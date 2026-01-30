@@ -12,11 +12,11 @@ mixin SizeBtnSheetModal {
       context: context,
       builder: (context) {
         // Use a StatefulBuilder so the modal can keep local selected state
-        String? selectedLabel = 'On sale';
+        String? selectedLabel = 'S';
 
         return StatefulBuilder(
           builder: (context, setState) {
-            Widget dealsItem(String label) => _buildDealsItem(
+            Widget sizeItem(String label) => _buildSizeItem(
               label,
               context,
               selectedLabel == label,
@@ -40,11 +40,9 @@ mixin SizeBtnSheetModal {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      GestureDetector(
-                        onTap: () => setState(() => selectedLabel = null),
-                        child: TextRegular('Clear'),
+                      Expanded(
+                        child: TextMedium('Size', textAlign: TextAlign.center),
                       ),
-                      TextMedium('Deals'),
                       GestureDetector(
                         onTap: () => context.pop(),
                         child: SvgPicture.asset(
@@ -59,8 +57,11 @@ mixin SizeBtnSheetModal {
                   24.verticalSpace,
                   Column(
                     children: [
-                      dealsItem('On sale'),
-                      dealsItem('Free Shipping Eligible'),
+                      sizeItem('S'),
+                      sizeItem('M'),
+                      sizeItem('L'),
+                      sizeItem('XL'),
+                      sizeItem('2XL'),
                     ],
                   ),
                 ],
@@ -72,7 +73,7 @@ mixin SizeBtnSheetModal {
     );
   }
 
-  Widget _buildDealsItem(
+  Widget _buildSizeItem(
     String label,
     BuildContext context,
     bool isSelected,
