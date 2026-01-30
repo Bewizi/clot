@@ -6,8 +6,12 @@ import 'package:clot/core/presentation/ui/extension/app_spacing_extension.dart';
 import 'package:clot/core/presentation/ui/extension/fontsize_extension.dart';
 import 'package:clot/core/presentation/ui/widgets/app_back_button.dart';
 import 'package:clot/core/presentation/ui/widgets/text_styles.dart';
+import 'package:clot/features/cart/presentation/pages/cart_page.dart';
+import 'package:clot/features/products/presentation/widget/mixins/color_btn_sheet_modal.dart';
+import 'package:clot/features/products/presentation/widget/mixins/size_btn_sheet_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 
 class ProductsScreen extends StatefulWidget {
   const ProductsScreen({super.key});
@@ -18,7 +22,8 @@ class ProductsScreen extends StatefulWidget {
   State<ProductsScreen> createState() => _ProductsScreenState();
 }
 
-class _ProductsScreenState extends State<ProductsScreen> {
+class _ProductsScreenState extends State<ProductsScreen>
+    with SizeBtnSheetModal, ColorBtnSheetModal {
   List<String> images = [AppImages.kJacket1, AppImages.kJacket2];
 
   @override
@@ -66,8 +71,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                           padding: const EdgeInsets.only(right: 16),
                           child: Image.asset(
                             images[index],
-                            fit: BoxFit.cover,
-                            width: double.infinity,
+                            fit: BoxFit.contain,
                           ),
                         );
                       },
@@ -120,24 +124,27 @@ class _ProductsScreenState extends State<ProductsScreen> {
       // Fixed bottom bar with price and Add to Bag button
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-          decoration: BoxDecoration(
-            color: AppColors.kPrimary,
-            borderRadius: BorderRadius.circular(100),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              TextRegular(
-                '\$148',
-                color: AppColors.kWhite100,
-                fontWeight: FontManagerWeight.extraBold,
-              ),
-              const SizedBox(width: 16),
+        child: GestureDetector(
+          onTap: () => context.push(CartPage.routeName),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+            decoration: BoxDecoration(
+              color: AppColors.kPrimary,
+              borderRadius: BorderRadius.circular(100),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextRegular(
+                  '\$148',
+                  color: AppColors.kWhite100,
+                  fontWeight: FontManagerWeight.extraBold,
+                ),
+                const SizedBox(width: 16),
 
-              TextRegular('Add to Bag', color: AppColors.kWhite100),
-            ],
+                TextRegular('Add to Bag', color: AppColors.kWhite100),
+              ],
+            ),
           ),
         ),
       ),
@@ -146,55 +153,61 @@ class _ProductsScreenState extends State<ProductsScreen> {
 
   // Build Size Option Widget
   Widget buildSizeOption() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(100),
-        color: AppColors.kLightGrey,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          TextRegular('Size', fontWeight: FontManagerWeight.medium),
-          Row(
-            children: [
-              TextRegular('S', color: AppColors.kBlcak100),
-              32.horizontalSpace,
-              SvgPicture.asset(AppSvgs.kArrowDown),
-            ],
-          ),
-        ],
+    return GestureDetector(
+      onTap: () => showSizeModalSheet(context),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(100),
+          color: AppColors.kLightGrey,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            TextRegular('Size', fontWeight: FontManagerWeight.medium),
+            Row(
+              children: [
+                TextRegular('S', color: AppColors.kBlcak100),
+                32.horizontalSpace,
+                SvgPicture.asset(AppSvgs.kArrowDown),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
 
   // Build Color Option Widget
   Widget buildColorOption() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(100),
-        color: AppColors.kLightGrey,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          TextRegular('Color', fontWeight: FontManagerWeight.medium),
-          Row(
-            children: [
-              Container(
-                width: 24,
-                height: 24,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColors.kPrimary,
+    return GestureDetector(
+      onTap: () => showColorModalSheet(context),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(100),
+          color: AppColors.kLightGrey,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            TextRegular('Color', fontWeight: FontManagerWeight.medium),
+            Row(
+              children: [
+                Container(
+                  width: 24,
+                  height: 24,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.kPrimary,
+                  ),
                 ),
-              ),
-              32.horizontalSpace,
-              SvgPicture.asset(AppSvgs.kArrowDown),
-            ],
-          ),
-        ],
+                32.horizontalSpace,
+                SvgPicture.asset(AppSvgs.kArrowDown),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
