@@ -7,4 +7,6 @@ class AppImages {
   static const String kJacket1 = 'assets/images/Rectangle 9.png';
   static const String kJacket2 = 'assets/images/Rectangle 10.png';
   static const String kParcel = 'assets/images/parcel.png';
+  static const String kEllipse15 = 'assets/images/Ellipse 15.png';
+  static const String kEllipse16 = 'assets/images/Ellipse 16.png';
 }
