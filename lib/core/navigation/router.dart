@@ -12,6 +12,7 @@ import 'package:clot/features/orders/presentation/pages/order_details_screen.dar
 import 'package:clot/features/orders/presentation/pages/order_screen.dart';
 import 'package:clot/features/products/domain/category.dart';
 import 'package:clot/features/products/presentation/pages/category_product.dart';
+import 'package:clot/features/products/presentation/pages/products_screen.dart';
 import 'package:clot/features/products/presentation/pages/shop_by_categories.dart';
 import 'package:clot/features/splashscreen/splash_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -151,6 +152,12 @@ final GoRouter appRoute = GoRouter(
       path: OrderDetailsScreen.routeName,
       name: 'order-details',
       builder: (context, state) => const OrderDetailsScreen(),
+    ),
+
+    GoRoute(
+      path: ProductsScreen.routeName,
+      name: 'products',
+      builder: (context, state) => const ProductsScreen(),
     ),
   ],
 );
