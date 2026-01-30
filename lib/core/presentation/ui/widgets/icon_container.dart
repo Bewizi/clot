@@ -18,9 +18,7 @@ class IconContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        context.pop();
-      },
+      onTap: onTap ?? () => context.pop(),
       child: Container(
         width: ValueManager.iconContainerSize,
         height: ValueManager.iconContainerSize,
