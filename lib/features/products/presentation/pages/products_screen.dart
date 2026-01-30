@@ -12,6 +12,7 @@ import 'package:clot/features/products/presentation/widget/mixins/size_btn_sheet
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:clot/features/products/presentation/widgets/rating_stars.dart';
 
 class ProductsScreen extends StatefulWidget {
   const ProductsScreen({super.key});
@@ -85,14 +86,6 @@ class _ProductsScreenState extends State<ProductsScreen>
                   ),
                   16.verticalSpace,
                   TextRegular("\$148", color: AppColors.kPrimary),
-
-                  32.verticalSpace,
-
-                  buildSizeOption(),
-                  16.verticalSpace,
-                  buildColorOption(),
-                  16.verticalSpace,
-                  buildQuantityOption(),
                 ],
               ),
 
@@ -104,6 +97,13 @@ class _ProductsScreenState extends State<ProductsScreen>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      buildSizeOption(),
+                      16.verticalSpace,
+                      buildColorOption(),
+                      16.verticalSpace,
+                      buildQuantityOption(),
+                      32.verticalSpace,
+
                       buildDiscriptionSection(),
                       24.verticalSpace,
                       buildShippingAndReturns(),
@@ -111,7 +111,7 @@ class _ProductsScreenState extends State<ProductsScreen>
                       buildReviewsSection(),
 
                       // Add extra space so last content is visible above bottom bar
-                      SizedBox(height: 80),
+                      48.verticalSpace,
                     ],
                   ),
                 ),
@@ -212,6 +212,7 @@ class _ProductsScreenState extends State<ProductsScreen>
     );
   }
 
+  // Build Quantity Option Widget
   Widget buildQuantityOption() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -286,11 +287,60 @@ class _ProductsScreenState extends State<ProductsScreen>
             ),
           ],
         ),
-        16.verticalSpace,
-        TextRegular(
-          '213 Reviews',
-          fontSizes: 14.fs,
-          color: AppColors.kBlcak100.withValues(alpha: 0.5),
+        8.verticalSpace,
+        Row(
+          children: [
+            TextRegular(
+              '213 Reviews',
+              fontSizes: 14.fs,
+              color: AppColors.kBlcak100.withValues(alpha: 0.5),
+            ),
+          ],
+        ),
+
+        24.verticalSpace,
+
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 20,
+                      backgroundImage: AssetImage(AppImages.kEllipse15),
+                    ),
+                    16.horizontalSpace,
+                    TextRegular(
+                      'Alex Morgan',
+                      fontWeight: FontManagerWeight.bold,
+                    ),
+                  ],
+                ),
+
+                // Review Icon Button star
+                RatingStars(
+                  value: 3,
+                  size: 20.0,
+                  activeColor: AppColors.kPrimary,
+                  inactiveColor: AppColors.kBlcak100.withValues(alpha: 0.5),
+                  isInteractive: true,
+                ),
+              ],
+            ),
+
+            8.verticalSpace,
+            TextRegular(
+              'Gucci transcribes its heritage, creativity, and innovation into a plenitude of collections. From staple items to distinctive accessories.',
+              color: AppColors.kBlcak100.withValues(alpha: 0.5),
+              height: 2,
+              fontSizes: 14.fs,
+            ),
+            16.verticalSpace,
+            TextRegular('12days ago', fontSizes: 14.fs),
+          ],
         ),
       ],
     );
@@ -304,4 +354,8 @@ class _ProductsScreenState extends State<ProductsScreen>
       height: 2,
     );
   }
+
+  // Widget buildReview() {
+  //   return
+  // }
 }
