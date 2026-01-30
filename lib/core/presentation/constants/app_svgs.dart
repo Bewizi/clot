@@ -20,4 +20,7 @@ class AppSvgs {
   static const String kSearchIcon = 'assets/svgs/searchnormal_icon.svg';
   static const String kSearchIcon2 = 'assets/svgs/search_icon.svg';
   static const String kCloseIcon = 'assets/svgs/x_icon.svg';
+
+  static const String kAddIcon = 'assets/svgs/add_icon.svg';
+  static const String kMinusIcon = 'assets/svgs/minus_icon.svg';
 }
