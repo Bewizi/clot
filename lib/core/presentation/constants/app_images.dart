@@ -6,4 +6,5 @@ class AppImages {
   static const String kSearchIcon = 'assets/images/search.png';
   static const String kJacket1 = 'assets/images/Rectangle 9.png';
   static const String kJacket2 = 'assets/images/Rectangle 10.png';
+  static const String kParcel = 'assets/images/parcel.png';
 }
