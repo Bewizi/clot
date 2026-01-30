@@ -27,7 +27,7 @@ class IconContainer extends StatelessWidget {
         padding: EdgeInsets.zero,
         decoration: BoxDecoration(
           color: backgroundColor ?? AppColors.kLightGrey,
-          borderRadius: BorderRadius.circular(100),
+          shape: BoxShape.circle,
         ),
         child: Center(child: child),
       ),
