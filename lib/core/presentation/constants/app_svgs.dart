@@ -23,4 +23,6 @@ class AppSvgs {
 
   static const String kAddIcon = 'assets/svgs/add_icon.svg';
   static const String kMinusIcon = 'assets/svgs/minus_icon.svg';
+
+  static const String kDiscountShape = 'assets/svgs/discountShape.svg';
 }
