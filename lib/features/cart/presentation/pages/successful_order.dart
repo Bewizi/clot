@@ -6,6 +6,7 @@ import 'package:clot/core/presentation/ui/widgets/app_button.dart';
 import 'package:clot/core/presentation/ui/widgets/text_styles.dart';
 import 'package:clot/features/orders/presentation/pages/order_details_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class SuccessfulOrder extends StatelessWidget {
   const SuccessfulOrder({super.key});
@@ -61,7 +62,7 @@ class SuccessfulOrder extends StatelessWidget {
             64.verticalSpace,
             AppButton(
               'See Order details',
-              onTap: () => OrderDetailsScreen.routeName,
+              onTap: () => context.push(OrderDetailsScreen.routeName),
             ),
           ],
         ),
