@@ -4,6 +4,7 @@ import 'package:clot/core/presentation/constants/font_manager.dart';
 import 'package:clot/core/presentation/ui/extension/app_spacing_extension.dart';
 import 'package:clot/core/presentation/ui/widgets/app_button.dart';
 import 'package:clot/core/presentation/ui/widgets/text_styles.dart';
+import 'package:clot/features/orders/presentation/pages/order_details_screen.dart';
 import 'package:flutter/material.dart';
 
 class SuccessfulOrder extends StatelessWidget {
@@ -58,7 +59,10 @@ class SuccessfulOrder extends StatelessWidget {
               color: AppColors.kBlcak100.withValues(alpha: 0.5),
             ),
             64.verticalSpace,
-            AppButton('See Order details', onTap: () {}),
+            AppButton(
+              'See Order details',
+              onTap: () => OrderDetailsScreen.routeName,
+            ),
           ],
         ),
       ),
