@@ -3,9 +3,11 @@ import 'package:clot/core/presentation/constants/app_svgs.dart';
 import 'package:clot/core/presentation/constants/font_manager.dart';
 import 'package:clot/core/presentation/ui/widgets/app_back_button.dart';
 import 'package:clot/core/presentation/ui/widgets/text_styles.dart';
+import 'package:clot/features/cart/presentation/pages/successful_order.dart';
 import 'package:clot/features/cart/presentation/widgets/checkoout_card_container.dart';
 import 'package:clot/features/cart/presentation/widgets/total_price.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CheckoutPage extends StatelessWidget {
   const CheckoutPage({super.key});
@@ -59,7 +61,7 @@ class CheckoutPage extends StatelessWidget {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         child: GestureDetector(
-          onTap: () {},
+          onTap: () => context.go(SuccessfulOrder.routeName),
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
             decoration: BoxDecoration(
