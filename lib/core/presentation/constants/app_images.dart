@@ -10,4 +10,5 @@ class AppImages {
   static const String kParcel = 'assets/images/parcel.png';
   static const String kEllipse15 = 'assets/images/Ellipse 15.png';
   static const String kEllipse16 = 'assets/images/Ellipse 16.png';
+  static const String kCartSuccess = 'assets/images/cart_success_image.png';
 }
