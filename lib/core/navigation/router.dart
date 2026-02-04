@@ -8,6 +8,7 @@ import 'package:clot/features/auth/presentation/pages/sign_up/sign_up.dart';
 import 'package:clot/features/auth/presentation/pages/tell_us_about_yourself/tell_us_about_yourself.dart';
 import 'package:clot/features/cart/presentation/pages/cart_page.dart';
 import 'package:clot/features/cart/presentation/pages/checkout_page.dart';
+import 'package:clot/features/cart/presentation/pages/successful_order.dart';
 import 'package:clot/features/home/presentation/pages/home.dart';
 import 'package:clot/features/notification/presentation/pages/notification_screen.dart';
 import 'package:clot/features/orders/presentation/pages/order_details_screen.dart';
@@ -165,13 +166,19 @@ final GoRouter appRoute = GoRouter(
     GoRoute(
       path: CartPage.routeName,
       name: 'add-to-cart',
-      builder: (context, state) => CartPage(),
+      builder: (context, state) => const CartPage(),
     ),
 
     GoRoute(
       path: CheckoutPage.routeName,
       name: 'checkout-product',
-      builder: (context, state) => CheckoutPage(),
+      builder: (context, state) => const CheckoutPage(),
+    ),
+
+    GoRoute(
+      path: SuccessfulOrder.routeName,
+      name: 'successful_order',
+      builder: (context, state) => const SuccessfulOrder(),
     ),
   ],
 );
