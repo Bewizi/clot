@@ -9,7 +9,7 @@ import 'package:clot/core/presentation/ui/widgets/text_styles.dart';
 import 'package:clot/features/cart/presentation/pages/cart_page.dart';
 import 'package:clot/features/products/presentation/widget/mixins/color_btn_sheet_modal.dart';
 import 'package:clot/features/products/presentation/widget/mixins/size_btn_sheet_modal.dart';
-import 'package:clot/features/products/presentation/widgets/rating_stars.dart';
+import 'package:clot/features/products/presentation/widget/rating_stars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
