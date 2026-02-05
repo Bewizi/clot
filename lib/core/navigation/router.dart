@@ -17,6 +17,7 @@ import 'package:clot/features/products/domain/category.dart';
 import 'package:clot/features/products/presentation/pages/category_product.dart';
 import 'package:clot/features/products/presentation/pages/products_screen.dart';
 import 'package:clot/features/products/presentation/pages/shop_by_categories.dart';
+import 'package:clot/features/profile/presentation/pages/profile_screen.dart';
 import 'package:clot/features/splashscreen/splash_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -88,47 +89,63 @@ final GoRouter appRoute = GoRouter(
     FirebaseAuth.instance.authStateChanges(),
   ),
   routes: [
+    // signIn screen
     GoRoute(
       path: SignIn.routeName,
       name: 'signIn',
       builder: (context, state) => const SignIn(),
     ),
+
+    // signUp screen
     GoRoute(
       path: SignUp.routeName,
       name: 'signUp',
       builder: (context, state) => const SignUp(),
     ),
+
+    // forgotPassword screen
     GoRoute(
       path: ForgotPassword.routeName,
       name: 'forgotPassword',
       builder: (context, state) => const ForgotPassword(),
     ),
+
+    // resetPassword screen
     GoRoute(
       path: ResetPassword.routeName,
       name: 'resetPassword',
       builder: (context, state) => const ResetPassword(),
     ),
+
+    // tellUsAboutYourself screen
     GoRoute(
       path: TellUsAboutYourself.routeName,
       name: 'tellUsAboutYourself',
       builder: (context, state) => const TellUsAboutYourself(),
     ),
+
+    // splash screen
     GoRoute(
       path: SplashScreen.routeName,
       name: 'splash',
       builder: (context, state) => const SplashScreen(),
     ),
+
+    // homePage screen
     GoRoute(
       path: HomePage.routeName,
       name: 'home',
       builder: (context, state) => const HomePage(),
     ),
+
+    // shopByCategories screen
     GoRoute(
       path: ShopByCategories.routeName,
       name: 'shopByCategories',
       builder: (context, state) => const ShopByCategories(),
     ),
 
+    // category screen
     GoRoute(
       path: CategoryProduct.routeName,
       name: 'categoryProduct',
@@ -139,46 +156,60 @@ final GoRouter appRoute = GoRouter(
       },
     ),
 
+    // notifications screen
     GoRoute(
       path: NotificationScreen.routeName,
       name: 'notifications',
       builder: (context, state) => const NotificationScreen(),
     ),
 
+    // order screen
     GoRoute(
       path: OrderScreen.routeName,
       name: 'order',
       builder: (context, state) => const OrderScreen(),
     ),
 
+    // order details screen
     GoRoute(
       path: OrderDetailsScreen.routeName,
       name: 'order-details',
       builder: (context, state) => const OrderDetailsScreen(),
     ),
 
+    // products screen
     GoRoute(
       path: ProductsScreen.routeName,
       name: 'products',
       builder: (context, state) => const ProductsScreen(),
     ),
 
+    // cart screen
     GoRoute(
       path: CartPage.routeName,
       name: 'add-to-cart',
       builder: (context, state) => const CartPage(),
     ),
 
+    // checkout screen
     GoRoute(
       path: CheckoutPage.routeName,
       name: 'checkout-product',
       builder: (context, state) => const CheckoutPage(),
     ),
 
+    // successful order
     GoRoute(
       path: SuccessfulOrder.routeName,
       name: 'successful_order',
       builder: (context, state) => const SuccessfulOrder(),
+    ),
+
+    // profile screen
+    GoRoute(
+      path: ProfileScreen.routeName,
+      name: 'profile',
+      builder: (context, state) => const ProfileScreen(),
     ),
   ],
 );
