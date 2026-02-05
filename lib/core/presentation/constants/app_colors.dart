@@ -5,5 +5,5 @@ class AppColors {
   static const Color kBlcak100 = Color(0xff272727);
   static const Color kLightGrey = Color(0xfff4f4f4);
   static const Color kWhite100 = Color(0xffffffff);
-  static const Color kError500 = Color(0xFFF04438);
+  static const Color kError500 = Color(0xFFFA3636);
 }
