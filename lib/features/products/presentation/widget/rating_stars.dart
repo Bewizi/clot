@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:clot/core/presentation/constants/app_colors.dart';
+import 'package:flutter/material.dart';
 
 /// A simple, reusable rating stars widget.
 ///
@@ -68,7 +68,9 @@ class RatingStars extends StatelessWidget {
           star = Icon(
             isFilled ? Icons.star : Icons.star_border,
             size: size,
-            color: isFilled ? activeColor : inactiveColor.withOpacity(0.6),
+            color: isFilled
+                ? activeColor
+                : inactiveColor.withValues(alpha: 0.6),
           );
         }
 
