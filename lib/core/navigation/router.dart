@@ -17,7 +17,12 @@ import 'package:clot/features/products/domain/category.dart';
 import 'package:clot/features/products/presentation/pages/category_product.dart';
 import 'package:clot/features/products/presentation/pages/products_screen.dart';
 import 'package:clot/features/products/presentation/pages/shop_by_categories.dart';
+import 'package:clot/features/profile/presentation/pages/address/add_address.dart';
+import 'package:clot/features/profile/presentation/pages/address/address.dart';
+import 'package:clot/features/profile/presentation/pages/payment/add_card.dart';
+import 'package:clot/features/profile/presentation/pages/payment/payment.dart';
 import 'package:clot/features/profile/presentation/pages/profile_screen.dart';
+import 'package:clot/features/profile/presentation/pages/wishlist/wishlist_screen.dart';
 import 'package:clot/features/splashscreen/splash_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -210,6 +215,37 @@ final GoRouter appRoute = GoRouter(
       path: ProfileScreen.routeName,
       name: 'profile',
       builder: (context, state) => const ProfileScreen(),
+      routes: [
+        GoRoute(
+          path: Address.routeName,
+          name: 'address',
+          builder: (context, state) => Address(),
+          routes: [
+            GoRoute(
+              path: AddAddress.routeName,
+              name: 'add-address',
+              builder: (context, state) => AddAddress(),
+            ),
+          ],
+        ),
+        GoRoute(
+          path: Payment.routeName,
+          name: 'payment',
+          builder: (context, state) => const Payment(),
+          routes: [
+            GoRoute(
+              path: AddCard.routeName,
+              name: 'add-card',
+              builder: (context, state) => AddCard(),
+            ),
+          ],
+        ),
+        GoRoute(
+          path: WishList.routeName,
+          name: 'wishlist',
+          builder: (context, state) => WishList(),
+        ),
+      ],
     ),
   ],
 );
