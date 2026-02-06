@@ -1,4 +1,5 @@
 import 'package:clot/core/presentation/constants/app_colors.dart';
+import 'package:clot/core/presentation/constants/app_images.dart';
 import 'package:clot/core/presentation/constants/app_svgs.dart';
 import 'package:clot/core/presentation/constants/font_manager.dart';
 import 'package:clot/core/presentation/constants/icon_size_manager.dart';
@@ -14,6 +15,7 @@ import 'package:clot/features/products/presentation/pages/shop_by_categories.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 class HomePage extends StatefulWidget {
@@ -44,26 +46,32 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: AppNavBar(currentIndex: 0),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // user image rounded inside of ClipRRect
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(100),
+                  // user image
+                  Container(
+                    width: 50,
+                    height: 50,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: AppColors.kBlcak100,
+                    ),
+                    clipBehavior: Clip.hardEdge,
                     child: Image.asset(
-                      '',
-                      width: 50,
-                      height: 50,
+                      AppImages.kEllipse15,
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
-                        return Icon(
-                          Icons.person,
-                          size: 50,
-                          color: AppColors.kBlcak100,
+                        return Center(
+                          child: Icon(
+                            FontAwesomeIcons.user,
+                            size: 24,
+                            color: AppColors.kWhite100,
+                          ),
                         );
                       },
                     ),
