@@ -176,7 +176,7 @@ class _SignUpState extends State<SignUp> {
                         40.verticalSpace,
 
                         AppButton(
-                          'Continue',
+                          text: 'Continue',
                           onTap: isLoading
                               ? null
                               : () {

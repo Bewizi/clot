@@ -247,7 +247,7 @@ class _CategoryProductState extends State<CategoryProduct>
                   Text(state.message),
                   const SizedBox(height: 16),
                   AppButton(
-                    'Retry',
+                    text: 'Retry',
                     onTap: () {
                       context.read<CategoryBloc>().add(
                         LoadCategoryProducts(widget.category.id.trim()),

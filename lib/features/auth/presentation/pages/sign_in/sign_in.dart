@@ -168,7 +168,7 @@ class _SignInState extends State<SignIn> {
 
                         // login button
                         AppButton(
-                          'Login',
+                          text: 'Login',
                           onTap: isLoading
                               ? null
                               : () {

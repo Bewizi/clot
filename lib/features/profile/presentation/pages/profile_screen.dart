@@ -8,6 +8,7 @@ import 'package:clot/features/navigation/app_nav_bar.dart';
 import 'package:clot/features/profile/presentation/widgets/profile_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -21,8 +22,12 @@ class ProfileScreen extends StatelessWidget {
     // const String? profileImageAsset = AppImages.kEllipse15;
     const String? profileImageAsset = null;
 
-    final List<Map<String, dynamic>> profileSettings = const [
-      {'text': 'Address', 'icon': AppSvgs.kArrowRight},
+    final List<Map<String, dynamic>> profileSettings = [
+      {
+        'text': 'Address',
+        'icon': AppSvgs.kArrowRight,
+        'onTap': () => context.pushNamed('address'),
+      },
       {'text': 'Wishlist', 'icon': AppSvgs.kArrowRight},
       {'text': 'Payment', 'icon': AppSvgs.kArrowRight},
       {'text': 'Help', 'icon': AppSvgs.kArrowRight},
@@ -88,7 +93,11 @@ class ProfileScreen extends StatelessWidget {
                 child: ListView.separated(
                   itemBuilder: (context, index) {
                     final data = profileSettings[index];
-                    return buildProfileSettings(data['text'], data['icon']);
+                    return buildProfileSettings(
+                      data['text'],
+                      data['icon'],
+                      data['onTap'],
+                    );
                   },
                   separatorBuilder: (context, index) => 8.verticalSpace,
 
@@ -100,7 +109,7 @@ class ProfileScreen extends StatelessWidget {
 
               // sign out button
               AppButton(
-                'Sign Out',
+                text: 'Sign Out',
                 onTap: () {},
                 color: Colors.transparent,
                 textColor: AppColors.kError500,

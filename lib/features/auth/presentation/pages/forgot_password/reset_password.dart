@@ -42,7 +42,7 @@ class ResetPassword extends StatelessWidget {
                 24.verticalSpace,
 
                 AppButton(
-                  'Return to Login',
+                  text: 'Return to Login',
                   onTap: () {
                     context.go(SignIn.routeName);
                   },

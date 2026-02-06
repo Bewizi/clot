@@ -61,7 +61,7 @@ class SuccessfulOrder extends StatelessWidget {
             ),
             64.verticalSpace,
             AppButton(
-              'See Order details',
+              text: 'See Order details',
               onTap: () => context.push(OrderDetailsScreen.routeName),
             ),
           ],

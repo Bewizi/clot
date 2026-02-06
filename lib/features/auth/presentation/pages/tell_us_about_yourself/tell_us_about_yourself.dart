@@ -77,7 +77,7 @@ class _TellUsAboutYourselfState extends State<TellUsAboutYourself> {
                   const Spacer(),
 
                   AppButton(
-                    'Finish',
+                    text: 'Finish',
                     onTap: isLoading || selectedGender == null
                         ? null
                         : () {

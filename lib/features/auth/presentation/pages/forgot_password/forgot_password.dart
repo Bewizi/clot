@@ -90,7 +90,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
 
                         // login button
                         AppButton(
-                          'Continue',
+                          text: 'Continue',
                           onTap: isLoading
                               ? null
                               : () {

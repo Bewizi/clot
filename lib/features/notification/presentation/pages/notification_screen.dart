@@ -52,7 +52,7 @@ class NotificationScreen extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.sizeOf(context).width * 0.4,
                         child: AppButton(
-                          'Explore Categories',
+                          text: 'Explore Categories',
                           onTap: () => context.push(ShopByCategories.routeName),
                         ),
                       ),
