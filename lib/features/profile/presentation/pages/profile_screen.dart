@@ -28,8 +28,16 @@ class ProfileScreen extends StatelessWidget {
         'icon': AppSvgs.kArrowRight,
         'onTap': () => context.pushNamed('address'),
       },
-      {'text': 'Wishlist', 'icon': AppSvgs.kArrowRight},
-      {'text': 'Payment', 'icon': AppSvgs.kArrowRight},
+      {
+        'text': 'Wishlist',
+        'icon': AppSvgs.kArrowRight,
+        'onTap': () => context.pushNamed('wishlist'),
+      },
+      {
+        'text': 'Payment',
+        'icon': AppSvgs.kArrowRight,
+        'onTap': () => context.pushNamed('payment'),
+      },
       {'text': 'Help', 'icon': AppSvgs.kArrowRight},
       {'text': 'Support', 'icon': AppSvgs.kArrowRight},
     ];
