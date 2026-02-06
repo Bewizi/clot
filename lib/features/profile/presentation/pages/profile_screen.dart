@@ -17,11 +17,6 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // To properly handle a missing image, you can define a variable
-    // for your image asset and set it to null to test the fallback.
-    // const String? profileImageAsset = AppImages.kEllipse15;
-    const String? profileImageAsset = null;
-
     final List<Map<String, dynamic>> profileSettings = [
       {
         'text': 'Address',
@@ -51,14 +46,27 @@ class ProfileScreen extends StatelessWidget {
             children: [
               //   profile image,
               Center(
-                child: CircleAvatar(
-                  maxRadius: 50,
-                  backgroundImage: profileImageAsset == null
-                      ? AssetImage(AppImages.kEllipse15)
-                      : null,
-                  child: profileImageAsset != null
-                      ? const Icon(FontAwesomeIcons.user, size: 48)
-                      : null,
+                child: Container(
+                  width: 80,
+                  height: 80,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.kBlcak100,
+                  ),
+                  clipBehavior: Clip.hardEdge,
+                  child: Image.asset(
+                    AppImages.kEllipse15,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Center(
+                        child: Icon(
+                          FontAwesomeIcons.user,
+                          size: 24,
+                          color: AppColors.kWhite100,
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
               32.verticalSpace,
