@@ -8,6 +8,7 @@ import 'package:clot/features/products/presentation/pages/products_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class TopSelling extends StatelessWidget {
   const TopSelling({super.key});
@@ -31,40 +32,46 @@ class TopSelling extends StatelessWidget {
         BlocBuilder<ProductBloc, ProductState>(
           builder: (context, state) {
             if (state is HomeDataLoaded) {
-              if (state.isTopSellingLoading) {
-                return const Center(
-                  child: SizedBox(
-                    height: 200,
-                    child: Center(child: CircularProgressIndicator()),
-                  ),
-                );
-              }
-
-              if (state.topSellingProducts.isEmpty) {
+              if (state.topSellingProducts.isEmpty &&
+                  !state.isTopSellingLoading) {
                 return const SizedBox(
                   height: 200,
                   child: Center(child: Text('No top selling products')),
                 );
               }
 
-              return SizedBox(
-                height: 200,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: state.topSellingProducts.length,
-                  itemBuilder: (context, index) {
-                    final product = state.topSellingProducts[index];
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 16),
-                      child: AppCard(
-                        image: product.imageUrl,
-                        icon: AppSvgs.kHeart,
-                        name: product.name,
-                        price: product.price,
-                        onTap: () => context.push(ProductsScreen.routeName),
-                      ),
-                    );
-                  },
+              final isLoading = state.isTopSellingLoading;
+              final productToShow = state.topSellingProducts.isEmpty
+                  ? List.generate(3, (index) => null)
+                  : state.topSellingProducts;
+
+              return Skeletonizer(
+                enabled: isLoading,
+                child: SizedBox(
+                  height: 200,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: productToShow.length,
+                    itemBuilder: (context, index) {
+                      final product = state.topSellingProducts.isEmpty
+                          ? null
+                          : state.topSellingProducts[index];
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 16),
+                        child: AppCard(
+                          image:
+                              product?.imageUrl ??
+                              'https://via.placeholder.com/150',
+                          icon: AppSvgs.kHeart,
+                          name: product?.name ?? 'Product Name',
+                          price: product?.price ?? '\$00.00',
+                          onTap: product != null
+                              ? () => context.push(ProductsScreen.routeName)
+                              : null,
+                        ),
+                      );
+                    },
+                  ),
                 ),
               );
             }
@@ -72,7 +79,27 @@ class TopSelling extends StatelessWidget {
               return Center(child: TextMedium(state.message));
             }
             // initial loading
-            return const Center(child: CircularProgressIndicator());
+            return Skeletonizer(
+              enabled: true,
+              child: SizedBox(
+                height: 200,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 16),
+                      child: AppCard(
+                        image: 'https://via.placeholder.com/150',
+                        icon: AppSvgs.kHeart,
+                        name: 'Product Name',
+                        price: '\$00.00',
+                      ),
+                    );
+                  },
+                  itemCount: 3,
+                ),
+              ),
+            );
           },
         ),
       ],
