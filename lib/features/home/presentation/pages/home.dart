@@ -17,6 +17,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -153,44 +154,94 @@ class _HomePageState extends State<HomePage> {
                   }
 
                   if (state is HomeDataLoaded) {
-                    return SizedBox(
+                    if (state.categories.isEmpty && !state.isCategoryLoading) {
+                      return const Center(child: Text('No categories'));
+                    }
+
+                    final isLoading = state.isCategoryLoading;
+                    final categoriesToSHow = state.categories.isEmpty
+                        ? List.generate(5, (index) => null)
+                        : state.categories;
+
+                    return Skeletonizer(
+                      enabled: isLoading,
+                      child: SizedBox(
+                        height: 150,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            final data = state.categories.isEmpty
+                                ? null
+                                : state.categories[index];
+                            return Column(
+                              crossAxisAlignment: .center,
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 14),
+                                    child: Image.network(
+                                      data?.imageUrl ??
+                                          'https://via.placeholder.com/80',
+                                      width: 80,
+                                      height: 80,
+                                      fit: BoxFit.cover,
+                                      errorBuilder:
+                                          (context, error, stackTrace) =>
+                                              const Icon(
+                                                FontAwesomeIcons.images,
+                                                size: 16,
+                                              ),
+                                    ),
+                                  ),
+                                ),
+                                8.verticalSpace,
+                                TextSmall(
+                                  data?.name ?? 'Category',
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            );
+                          },
+                          itemCount: categoriesToSHow.length,
+                        ),
+                      ),
+                    );
+                  }
+
+                  return Skeletonizer(
+                    enabled: true,
+                    child: SizedBox(
                       height: 150,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
+                        itemCount: 5,
                         itemBuilder: (context, index) {
-                          final data = state.categories[index];
                           return Column(
-                            crossAxisAlignment: .center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(12),
                                 child: Padding(
                                   padding: const EdgeInsets.only(left: 14),
-                                  child: Image.network(
-                                    data.imageUrl,
+                                  child: Container(
                                     width: 80,
                                     height: 80,
-                                    fit: BoxFit.cover,
-                                    errorBuilder:
-                                        (context, error, stackTrace) =>
-                                            const Icon(
-                                              Icons.image_not_supported_rounded,
-                                              size: 16,
-                                            ),
+                                    color: AppColors.kLightGrey,
                                   ),
                                 ),
                               ),
                               8.verticalSpace,
-                              TextSmall(data.name, textAlign: TextAlign.center),
+                              const TextSmall(
+                                'Category',
+                                textAlign: TextAlign.center,
+                              ),
                             ],
                           );
                         },
-                        itemCount: state.categories.length,
                       ),
-                    );
-                  }
-
-                  return const Center(child: CircularProgressIndicator());
+                    ),
+                  );
                 },
               ),
 
