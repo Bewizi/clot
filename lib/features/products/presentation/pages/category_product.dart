@@ -97,9 +97,13 @@ class _CategoryProductState extends State<CategoryProduct>
       appBar: AppBar(
         automaticallyImplyLeading: false,
         forceMaterialTransparency: true,
-        title: Padding(
-          padding: const EdgeInsets.only(left: 8.0),
-          child: AppBackButton(),
+        title: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: AppBackButton(),
+            ),
+          ],
         ),
       ),
       body: BlocBuilder<CategoryBloc, CategoryState>(
