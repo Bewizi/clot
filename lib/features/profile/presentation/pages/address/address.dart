@@ -40,12 +40,20 @@ class Address extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    TextRegular('2715 Ash Dr. San Jose, South Dakota 83475'),
-                    AppButton(
-                      text: 'Edit',
-                      onTap: () {},
-                      textColor: AppColors.kPrimary,
-                      color: Colors.transparent,
+                    const Expanded(
+                      child: TextRegular(
+                        '2715 Ash Dr. San Jose, South Dakota 83475',
+                        maxLines: 1,
+                        overFlow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    Expanded(
+                      child: AppButton(
+                        text: 'Edit',
+                        onTap: () {},
+                        textColor: AppColors.kPrimary,
+                        color: Colors.transparent,
+                      ),
                     ),
                   ],
                 ),
