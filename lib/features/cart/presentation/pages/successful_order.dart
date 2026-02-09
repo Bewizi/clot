@@ -35,36 +35,38 @@ class SuccessfulOrder extends StatelessWidget {
             topRight: Radius.circular(16),
           ),
         ),
-        child: Column(
-          children: [
-            AppRichText(
-              text: 'Order Placed\n Successfully',
-              fontSize: 32,
-              fontWeight: FontWeight.bold,
-              color: AppColors.kBlcak100,
-              textAlign: TextAlign.center,
-              textSpan: [
-                TextSpan(
-                  text: '\n 8E6CEF',
-                  style: TextStyle(
-                    fontSize: 24,
-                    color: AppColors.kBlcak100,
-                    fontWeight: FontManagerWeight.bold,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              AppRichText(
+                text: 'Order Placed\n Successfully',
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+                color: AppColors.kBlcak100,
+                textAlign: TextAlign.center,
+                textSpan: [
+                  TextSpan(
+                    text: '\n 8E6CEF',
+                    style: TextStyle(
+                      fontSize: 24,
+                      color: AppColors.kBlcak100,
+                      fontWeight: FontManagerWeight.bold,
+                    ),
                   ),
-                ),
-              ],
-            ),
-            24.verticalSpace,
-            TextRegular(
-              'You will receive an email confirmation',
-              color: AppColors.kBlcak100.withValues(alpha: 0.5),
-            ),
-            64.verticalSpace,
-            AppButton(
-              text: 'See Order details',
-              onTap: () => context.push(OrderDetailsScreen.routeName),
-            ),
-          ],
+                ],
+              ),
+              24.verticalSpace,
+              TextRegular(
+                'You will receive an email confirmation',
+                color: AppColors.kBlcak100.withValues(alpha: 0.5),
+              ),
+              64.verticalSpace,
+              AppButton(
+                text: 'See Order details',
+                onTap: () => context.push(OrderDetailsScreen.routeName),
+              ),
+            ],
+          ),
         ),
       ),
     );
