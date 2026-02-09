@@ -41,7 +41,14 @@ class NotificationCard extends StatelessWidget {
             ),
 
             16.horizontalSpace,
-            Expanded(child: TextRegular(text, color: AppColors.kBlcak100)),
+            Expanded(
+              child: TextRegular(
+                text,
+                color: AppColors.kBlcak100,
+                maxLines: 2,
+                overFlow: TextOverflow.ellipsis,
+              ),
+            ),
           ],
         ),
       ),
