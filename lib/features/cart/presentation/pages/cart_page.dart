@@ -77,16 +77,18 @@ class CartPage extends StatelessWidget {
                     ],
                   ),
                 )
-              : Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextMedium('Remove All'),
-                    ),
-                    16.verticalSpace,
-                    Expanded(
-                      child: ListView.separated(
+              : SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextRegular('Remove All'),
+                      ),
+                      16.verticalSpace,
+                      ListView.separated(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
                         itemCount: cartItems.length,
                         separatorBuilder: (context, index) => 16.verticalSpace,
                         itemBuilder: (context, index) {
@@ -100,57 +102,48 @@ class CartPage extends StatelessWidget {
                           );
                         },
                       ),
-                    ),
-
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          buildReview(),
-                          40.verticalSpace,
-
-                          Container(
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              color: AppColors.kLightGrey,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      16.verticalSpace,
+                      buildReview(),
+                      40.verticalSpace,
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: AppColors.kLightGrey,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
                               children: [
-                                Row(
-                                  children: [
-                                    SvgPicture.asset(AppSvgs.kDiscountShape),
-                                    16.horizontalSpace,
-                                    TextSmall(
-                                      'Enter Coupon Code',
-                                      color: AppColors.kBlcak100.withValues(
-                                        alpha: 0.5,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                IconContainer(
-                                  backgroundColor: AppColors.kPrimary,
-                                  child: SvgPicture.asset(
-                                    AppSvgs.kArrowRight,
-                                    colorFilter: ColorFilter.mode(
-                                      AppColors.kWhite100,
-                                      BlendMode.srcIn,
-                                    ),
+                                SvgPicture.asset(AppSvgs.kDiscountShape),
+                                16.horizontalSpace,
+                                TextSmall(
+                                  'Enter Coupon Code',
+                                  color: AppColors.kBlcak100.withValues(
+                                    alpha: 0.5,
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-                        ],
+                            IconContainer(
+                              backgroundColor: AppColors.kPrimary,
+                              child: SvgPicture.asset(
+                                AppSvgs.kArrowRight,
+                                colorFilter: ColorFilter.mode(
+                                  AppColors.kWhite100,
+                                  BlendMode.srcIn,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
         ),
       ),
-
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         child: GestureDetector(
