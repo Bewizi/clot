@@ -15,9 +15,13 @@ class OrderDetailsScreen extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         forceMaterialTransparency: true,
-        leading: AppBackButton(),
-        centerTitle: true,
-        title: const TextRegular('Order #456765'),
+
+        title: Row(
+          children: [
+            AppBackButton(),
+            Expanded(child: Center(child: const TextRegular('Order #456765'))),
+          ],
+        ),
       ),
       body: SafeArea(
         child: Padding(

@@ -76,7 +76,7 @@ class _OrderScreenState extends State<OrderScreen> {
               : Column(
                   children: [
                     SizedBox(
-                      height: MediaQuery.sizeOf(context).width * 0.06,
+                      height: MediaQuery.sizeOf(context).height * 0.06,
                       child: ListView.separated(
                         itemBuilder: (context, index) {
                           final type = orderType[index];
