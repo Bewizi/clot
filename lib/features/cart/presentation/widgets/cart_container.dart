@@ -20,62 +20,76 @@ Widget buildCartContainer(
       borderRadius: BorderRadius.circular(8),
     ),
     child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Row(
-          children: [
-            //   images
-            ClipRRect(
-              borderRadius: BorderRadiusGeometry.circular(4),
-              child: Image.asset(
-                productImage,
-                width: 100,
-                height: 100,
-                fit: BoxFit.cover,
+        Expanded(
+          child: Row(
+            children: [
+              //   images
+              ClipRRect(
+                borderRadius: BorderRadius.circular(4),
+                child: Image.asset(
+                  productImage,
+                  width: 100,
+                  height: 100,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            8.horizontalSpace,
-            //   column Text
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextRegular(productName, fontSizes: 14.fs),
-                8.verticalSpace,
-                Row(
+              8.horizontalSpace,
+              //   column Text
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    AppRichText(
-                      text: 'Size - ',
-                      color: AppColors.kBlcak100.withValues(alpha: 0.5),
-                      textSpan: [
-                        TextSpan(
-                          text: productSize,
-                          style: TextStyle(color: AppColors.kBlcak100),
-                        ),
-                      ],
+                    TextRegular(
+                      productName,
+                      fontSizes: 14.fs,
+                      maxLines: 1,
+                      overFlow: TextOverflow.ellipsis,
                     ),
-                    16.horizontalSpace,
-                    AppRichText(
-                      text: 'Color - ',
-                      color: AppColors.kBlcak100.withValues(alpha: 0.5),
-                      textSpan: [
-                        TextSpan(
-                          text: productColor,
-                          style: TextStyle(color: AppColors.kBlcak100),
+                    8.verticalSpace,
+                    Row(
+                      children: [
+                        Flexible(
+                          child: AppRichText(
+                            text: 'Size - ',
+                            color: AppColors.kBlcak100.withValues(alpha: 0.5),
+                            textSpan: [
+                              TextSpan(
+                                text: productSize,
+                                style: TextStyle(color: AppColors.kBlcak100),
+                              ),
+                            ],
+                          ),
+                        ),
+                        16.horizontalSpace,
+                        Flexible(
+                          child: AppRichText(
+                            text: 'Color - ',
+                            color: AppColors.kBlcak100.withValues(alpha: 0.5),
+                            textSpan: [
+                              TextSpan(
+                                text: productColor,
+                                style: TextStyle(color: AppColors.kBlcak100),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
                   ],
                 ),
-              ],
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
+        16.horizontalSpace, // Add spacing
         Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             TextRegular(price, fontSizes: 14.fs),
             8.verticalSpace,
             Row(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 buildQuantityButton(AppSvgs.kAddIcon),
                 8.horizontalSpace,
