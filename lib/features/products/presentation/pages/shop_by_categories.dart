@@ -8,6 +8,7 @@ import 'package:clot/features/products/presentation/widget/category_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class ShopByCategories extends StatefulWidget {
   const ShopByCategories({super.key});
@@ -22,7 +23,17 @@ class _ShopByCategoriesState extends State<ShopByCategories> {
   @override
   void initState() {
     super.initState();
-    context.read<CategoryBloc>().add(LoadAllCategoriesForBrowsing());
+    _loadCategories();
+  }
+
+  void _loadCategories() {
+    // Check current state and always reload categories
+    final currentState = context.read<CategoryBloc>().state;
+
+    // Always load categories when this page opens
+    if (currentState is CategoryProductsLoaded) {
+      context.read<CategoryBloc>().add(LoadAllCategoriesForBrowsing());
+    }
   }
 
   @override
@@ -50,17 +61,52 @@ class _ShopByCategoriesState extends State<ShopByCategories> {
               16.verticalSpace,
               BlocBuilder<CategoryBloc, CategoryState>(
                 builder: (context, state) {
+                  // Show skeleton while loading
                   if (state is CategoryLoading) {
-                    return const Expanded(
-                      child: Center(child: CircularProgressIndicator()),
+                    return Expanded(
+                      child: Skeletonizer(
+                        enabled: true,
+                        child: ListView.builder(
+                          itemCount: 5,
+                          itemBuilder: (context, index) {
+                            return CategoryCard(
+                              name: 'Category Name',
+                              imageUrl: 'https://via.placeholder.com/150',
+                              onTap: () {},
+                            );
+                          },
+                        ),
+                      ),
                     );
                   }
 
+                  // Show error
                   if (state is CategoryError) {
-                    return Expanded(child: Center(child: Text(state.message)));
+                    return Expanded(
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(state.message),
+                            16.verticalSpace,
+                            ElevatedButton(
+                              onPressed: _loadCategories,
+                              child: const Text('Retry'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
                   }
 
+                  // Show categories list
                   if (state is CategoriesListLoaded) {
+                    if (state.categories.isEmpty) {
+                      return const Expanded(
+                        child: Center(child: Text('No categories available')),
+                      );
+                    }
+
                     return Expanded(
                       child: ListView.builder(
                         itemCount: state.categories.length,
@@ -69,11 +115,17 @@ class _ShopByCategoriesState extends State<ShopByCategories> {
                           return CategoryCard(
                             name: category.name,
                             imageUrl: category.imageUrl,
-                            onTap: () {
-                              context.push(
+                            onTap: () async {
+                              // Navigate to category products
+                              await context.push(
                                 CategoryProduct.routeName,
                                 extra: category,
                               );
+
+                              // Reload categories after returning
+                              if (mounted) {
+                                _loadCategories();
+                              }
                             },
                           );
                         },
@@ -81,8 +133,21 @@ class _ShopByCategoriesState extends State<ShopByCategories> {
                     );
                   }
 
-                  return const Expanded(
-                    child: Center(child: Text('No categories')),
+                  // Fallback - show loading skeleton
+                  return Expanded(
+                    child: Skeletonizer(
+                      enabled: true,
+                      child: ListView.builder(
+                        itemCount: 5,
+                        itemBuilder: (context, index) {
+                          return CategoryCard(
+                            name: 'Category Name',
+                            imageUrl: 'https://via.placeholder.com/150',
+                            onTap: () {},
+                          );
+                        },
+                      ),
+                    ),
                   );
                 },
               ),
