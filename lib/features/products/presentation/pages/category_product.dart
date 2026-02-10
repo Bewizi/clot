@@ -17,6 +17,7 @@ import 'package:clot/features/products/presentation/widget/mixins/sort_by_btn_sh
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class CategoryProduct extends StatefulWidget {
   const CategoryProduct({super.key, required this.category});
@@ -108,8 +109,92 @@ class _CategoryProductState extends State<CategoryProduct>
       ),
       body: BlocBuilder<CategoryBloc, CategoryState>(
         builder: (context, state) {
+          // Show skeleton while loading
           if (state is CategoryLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return SafeArea(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                child: Skeletonizer(
+                  enabled: true,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Skeleton search field
+                      TextField(
+                        enabled: false,
+                        decoration: InputDecoration(
+                          hintText: 'Search',
+                          prefixIcon: Padding(
+                            padding: const EdgeInsets.only(left: 20, right: 12),
+                            child: SvgPicture.asset(
+                              AppSvgs.kSearchIcon,
+                              height: 16,
+                              width: 16,
+                            ),
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                            vertical: 16,
+                          ),
+                          fillColor: AppColors.kLightGrey,
+                          filled: true,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(100),
+                            borderSide: BorderSide.none,
+                          ),
+                        ),
+                      ),
+                      24.verticalSpace,
+
+                      // Skeleton filters
+                      SizedBox(
+                        height: MediaQuery.sizeOf(context).width * 0.06,
+                        child: ListView.separated(
+                          itemBuilder: (context, index) {
+                            return FilterProduct(
+                              title: 'Filter',
+                              color: AppColors.kLightGrey,
+                            );
+                          },
+                          separatorBuilder: (_, index) => 16.horizontalSpace,
+                          itemCount: 5,
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                        ),
+                      ),
+                      16.verticalSpace,
+
+                      TextRegular(
+                        '${widget.category.name.toUpperCase()} (0)',
+                        fontWeight: FontManagerWeight.bold,
+                      ),
+                      24.verticalSpace,
+
+                      // Skeleton grid
+                      Expanded(
+                        child: GridView.builder(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 16,
+                                mainAxisSpacing: 16,
+                                childAspectRatio: 0.7,
+                              ),
+                          itemCount: 6, // Show 6 skeleton cards
+                          itemBuilder: (context, index) {
+                            return AppCard(
+                              image: 'https://via.placeholder.com/150',
+                              icon: AppSvgs.kHeart,
+                              name: 'Product Name',
+                              price: '\$00.00',
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
           }
 
           if (state is CategoryProductsLoaded) {
@@ -243,27 +328,81 @@ class _CategoryProductState extends State<CategoryProduct>
 
           if (state is CategoryError) {
             return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(Icons.error, size: 48, color: Colors.red),
-                  const SizedBox(height: 16),
-                  Text(state.message),
-                  const SizedBox(height: 16),
-                  AppButton(
-                    text: 'Retry',
-                    onTap: () {
-                      context.read<CategoryBloc>().add(
-                        LoadCategoryProducts(widget.category.id.trim()),
-                      );
-                    },
-                  ),
-                ],
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.error, size: 48, color: Colors.red),
+                    const SizedBox(height: 16),
+                    Text(state.message),
+                    const SizedBox(height: 16),
+                    AppButton(
+                      text: 'Retry',
+                      onTap: () {
+                        context.read<CategoryBloc>().add(
+                          LoadCategoryProducts(widget.category.id.trim()),
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ),
             );
           }
 
-          return const Center(child: Text('No data'));
+          // Fallback skeleton
+          return SafeArea(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+              child: Skeletonizer(
+                enabled: true,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextField(
+                      enabled: false,
+                      decoration: InputDecoration(
+                        hintText: 'Search',
+                        fillColor: AppColors.kLightGrey,
+                        filled: true,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(100),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                    ),
+                    24.verticalSpace,
+                    TextRegular(
+                      'LOADING...',
+                      fontWeight: FontManagerWeight.bold,
+                    ),
+                    24.verticalSpace,
+                    Expanded(
+                      child: GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 16,
+                              mainAxisSpacing: 16,
+                              childAspectRatio: 0.7,
+                            ),
+                        itemCount: 6,
+                        itemBuilder: (context, index) {
+                          return AppCard(
+                            image: 'https://via.placeholder.com/150',
+                            icon: AppSvgs.kHeart,
+                            name: 'Product Name',
+                            price: '\$00.00',
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
         },
       ),
     );
