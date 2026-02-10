@@ -69,182 +69,187 @@ class _SignInState extends State<SignIn> {
       builder: (context, state) {
         final isLoading = state is AuthLoading;
         return Scaffold(
-          body: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextHeading('Sign in', color: AppColors.kBlcak100),
-                  32.verticalSpace,
+          body: SingleChildScrollView(
+            child: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 16,
+                  horizontal: 24,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextHeading('Sign in', color: AppColors.kBlcak100),
+                    32.verticalSpace,
 
-                  Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        // email
-                        AppInputFeild(
-                          prefix: Icon(FontAwesomeIcons.envelope),
-                          controller: emailController,
-                          hintText: 'Email Address',
-                          keyboardType: TextInputType.emailAddress,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Email Address is required';
-                            }
-                            if (!value.contains('@')) {
-                              return 'Invalid Email Address';
-                            }
-                            return null;
-                          },
-                        ),
-
-                        16.verticalSpace,
-
-                        // password
-                        Column(
-                          crossAxisAlignment: .start,
-                          children: [
-                            AppInputFeild(
-                              prefix: Icon(FontAwesomeIcons.lock),
-                              controller: passwordController,
-                              hintText: 'Password',
-                              keyboardType: TextInputType.visiblePassword,
-                              obscureText: !isPasswordVisible,
-                              suffix: InkWell(
-                                onTap: _passwordVisible,
-                                child: Icon(
-                                  isPasswordVisible
-                                      ? Icons.visibility_off
-                                      : Icons.visibility,
-                                ),
-                              ),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Password is required';
-                                }
-                                if (value.length < 6 || value.length > 16) {
-                                  return 'Password must be between 6 and 16 characters';
-                                }
-                                return null;
-                              },
-                            ),
-
-                            16.verticalSpace,
-
-                            // forgot password
-                            Row(
-                              mainAxisAlignment: .end,
-                              children: [
-                                AppRichText(
-                                  text: 'Forgot Password ? ',
-                                  styles: TextStyle(
-                                    fontSize: 12.fs,
-                                    color: AppColors.kBlcak100,
-                                    fontWeight: FontManagerWeight.medium,
-                                  ),
-
-                                  textSpan: [
-                                    TextSpan(
-                                      text: ' Reset',
-                                      style: TextStyle(
-                                        fontSize: 16.fs,
-                                        fontWeight: FontManagerWeight.bold,
-                                      ),
-
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () => context.push(
-                                          ForgotPassword.routeName,
-                                        ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-
-                        SizedBox(height: 40),
-
-                        // login button
-                        AppButton(
-                          text: 'Login',
-                          onTap: isLoading
-                              ? null
-                              : () {
-                                  if (_formKey.currentState!.validate()) {
-                                    context.read<AuthBloc>().add(
-                                      SignInRequested(
-                                        email: emailController.text.trim(),
-                                        password: passwordController.text
-                                            .trim(),
-                                      ),
-                                    );
-                                  }
-                                },
-                          child: isLoading
-                              ? SizedBox(
-                                  height: 20,
-                                  width: 20,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                      Colors.white,
-                                    ),
-                                  ),
-                                )
-                              : null,
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  24.verticalSpace,
-                  Center(
-                    child: AppRichText(
-                      text: 'Dont have an Account ? ',
-                      styles: TextStyle(
-                        fontSize: 12.fs,
-                        color: AppColors.kBlcak100,
-                        fontWeight: FontManagerWeight.medium,
-                      ),
-                      textSpan: [
-                        TextSpan(
-                          text: ' Create One',
-                          style: TextStyle(
-                            fontSize: 16.fs,
-                            fontWeight: FontManagerWeight.bold,
+                    Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          // email
+                          AppInputFeild(
+                            prefix: Icon(FontAwesomeIcons.envelope),
+                            controller: emailController,
+                            hintText: 'Email Address',
+                            keyboardType: TextInputType.emailAddress,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Email Address is required';
+                              }
+                              if (!value.contains('@')) {
+                                return 'Invalid Email Address';
+                              }
+                              return null;
+                            },
                           ),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () => context.go(SignUp.routeName),
-                        ),
-                      ],
+
+                          16.verticalSpace,
+
+                          // password
+                          Column(
+                            crossAxisAlignment: .start,
+                            children: [
+                              AppInputFeild(
+                                prefix: Icon(FontAwesomeIcons.lock),
+                                controller: passwordController,
+                                hintText: 'Password',
+                                keyboardType: TextInputType.visiblePassword,
+                                obscureText: !isPasswordVisible,
+                                suffix: InkWell(
+                                  onTap: _passwordVisible,
+                                  child: Icon(
+                                    isPasswordVisible
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                  ),
+                                ),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Password is required';
+                                  }
+                                  if (value.length < 6 || value.length > 16) {
+                                    return 'Password must be between 6 and 16 characters';
+                                  }
+                                  return null;
+                                },
+                              ),
+
+                              16.verticalSpace,
+
+                              // forgot password
+                              Row(
+                                mainAxisAlignment: .end,
+                                children: [
+                                  AppRichText(
+                                    text: 'Forgot Password ? ',
+                                    styles: TextStyle(
+                                      fontSize: 12.fs,
+                                      color: AppColors.kBlcak100,
+                                      fontWeight: FontManagerWeight.medium,
+                                    ),
+
+                                    textSpan: [
+                                      TextSpan(
+                                        text: ' Reset',
+                                        style: TextStyle(
+                                          fontSize: 16.fs,
+                                          fontWeight: FontManagerWeight.bold,
+                                        ),
+
+                                        recognizer: TapGestureRecognizer()
+                                          ..onTap = () => context.push(
+                                            ForgotPassword.routeName,
+                                          ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+
+                          SizedBox(height: 40),
+
+                          // login button
+                          AppButton(
+                            text: 'Login',
+                            onTap: isLoading
+                                ? null
+                                : () {
+                                    if (_formKey.currentState!.validate()) {
+                                      context.read<AuthBloc>().add(
+                                        SignInRequested(
+                                          email: emailController.text.trim(),
+                                          password: passwordController.text
+                                              .trim(),
+                                        ),
+                                      );
+                                    }
+                                  },
+                            child: isLoading
+                                ? SizedBox(
+                                    height: 20,
+                                    width: 20,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        Colors.white,
+                                      ),
+                                    ),
+                                  )
+                                : null,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
 
-                  40.verticalSpace,
+                    24.verticalSpace,
+                    Center(
+                      child: AppRichText(
+                        text: 'Dont have an Account ? ',
+                        styles: TextStyle(
+                          fontSize: 12.fs,
+                          color: AppColors.kBlcak100,
+                          fontWeight: FontManagerWeight.medium,
+                        ),
+                        textSpan: [
+                          TextSpan(
+                            text: ' Create One',
+                            style: TextStyle(
+                              fontSize: 16.fs,
+                              fontWeight: FontManagerWeight.bold,
+                            ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () => context.go(SignUp.routeName),
+                          ),
+                        ],
+                      ),
+                    ),
 
-                  _buildSignInOptions(
-                    context,
-                    () {},
-                    'Continue With Apple',
-                    AppSvgs.apple,
-                  ),
-                  16.verticalSpace,
-                  _buildSignInOptions(
-                    context,
-                    () {},
-                    'Continue With Google',
-                    AppSvgs.google,
-                  ),
-                  16.verticalSpace,
-                  _buildSignInOptions(
-                    context,
-                    () {},
-                    'Continue With Facebook',
-                    AppSvgs.facebook,
-                  ),
-                ],
+                    40.verticalSpace,
+
+                    _buildSignInOptions(
+                      context,
+                      () {},
+                      'Continue With Apple',
+                      AppSvgs.apple,
+                    ),
+                    16.verticalSpace,
+                    _buildSignInOptions(
+                      context,
+                      () {},
+                      'Continue With Google',
+                      AppSvgs.google,
+                    ),
+                    16.verticalSpace,
+                    _buildSignInOptions(
+                      context,
+                      () {},
+                      'Continue With Facebook',
+                      AppSvgs.facebook,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
